@@ -1,12 +1,6 @@
-<!Doctype
-<html>
-    <head>
-        <meta charset="utf-8">
-        <title>Patient</title>
-    </head>
-    <?php
+<?php
         $server = "localhost";
-        $db = "Projet-PHP";
+        $db = "projet-php";
         $login = "root";
         $mdp = "";
 
@@ -45,6 +39,4 @@
             }
         }            
         //header('Location: http://localhost/saisie.html');
-                
-    ?>
-</html>
+?>
