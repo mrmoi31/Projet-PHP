@@ -1,0 +1,35 @@
+button{
+  width: 150px;
+  height: 50px;
+  border-radius: 40px;
+  background-color: #373737;
+  color: white;
+  border : 4px double black;
+  font-family: revert;
+  font-weight: bold;
+}
+
+button:hover{
+  background-color: whitesmoke;
+  color: black;
+}
+
+.bouton{
+  margin-left: 5%;
+}
+.menu{
+  display: flex;
+  justify-content: center;
+  margin: auto;
+}
+h2{
+  text-align: center;
+  font-family: revert;
+  font-weight: bold;
+}
+body{
+  background-image:linear-gradient(rgba(255, 255, 255, 0.5),rgba(0, 0, 0, 0.5));
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+}
