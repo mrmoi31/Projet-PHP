@@ -1,6 +1,9 @@
+*{
+  font-family: revert;
+}
 button{
   width: 150px;
-  height: 50px;
+  height: 40px;
   border-radius: 40px;
   background-color: #373737;
   color: white;
@@ -45,4 +48,40 @@ body{
   background-repeat: no-repeat;
   background-size: cover;
   background-attachment: fixed;
+}
+table{
+  text-align: center;
+  width: 70%;
+  margin-top: 3%;
+  border-radius: 40px;
+  border: 5px solid;
+  overflow: hidden;
+  background-clip: padding-box;
+}
+thead{
+  font-size: large;
+  font-weight: bold;
+}
+th{
+  font-size: x-large;
+  text-decoration: underline;
+}
+tr:hover{
+  background-color: #808080;
+}
+.tablo{
+  display: flex;
+  justify-content: center;
+}
+.amsbouton{
+  margin-left: 2%;
+}
+.ams{
+  display: block;
+  text-align: center;
+  margin: auto;
+  margin-top: 1%;
+}
+.selected{
+  background-color: green;
 }

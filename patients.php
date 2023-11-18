@@ -3,17 +3,19 @@
     <head>
         <meta charset="utf-8">
         <link rel="stylesheet" href="style.css">
-        <title>Usagers - Cabinet Médical</title>
+        <title>Patients - Cabinet Médical</title>
     </head>
-
-    <?php require "header.html";?>
 
     <body>
 
+        <h2>Patients</h2>
+        <?php require "header.html";?>
+
+        <div class="tablo">
         <table>
             <thead>
                 <tr>
-                    <th colspan="10">Patients</th>
+                    <th colspan="10" class="titre">Patients</th>
                 </tr>
                 <tr>
                     <td>Id_Patient</td>
@@ -53,11 +55,12 @@
 
             </tbody>
         </table>
-
+    </div>
+    
         <form action="index.php" method="get">
         <button type="submit" name="choix" value="Ajouter">Ajouter</button>
         <button type="submit" name="choix" value="Modifier">Modifier</button>
-        <button type="submit" name="choix" value="Supprimer">Supprimer</button>      
+        <button type="submit" name="choix" value="Supprimer">Supprimer</button>
         </form>
     </body>
 </html>
