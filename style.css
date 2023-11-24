@@ -1,6 +1,14 @@
 *{
   font-family: revert;
 }
+.log{
+  display: flex;
+  justify-content: center;
+  margin: auto;
+  text-align: center;
+  border-radius: 40px;
+  border: 5px solid;
+}
 button{
   width: 150px;
   height: 40px;
@@ -67,13 +75,14 @@ th{
   font-size: x-large;
   text-decoration: underline;
 }
-tr:hover{
+tbody > tr:hover{
   background-color: #808080;
 }
 .tablo{
   display: flex;
   justify-content: center;
   text-align: center;
+  background-color: red;
 }
 .amsbouton{
   margin-left: 2%;

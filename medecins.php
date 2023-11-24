@@ -7,7 +7,7 @@
     </head>
 <script type="text/javascript">
 document.addEventListener('DOMContentLoaded', function() {
-    const tableRows = document.querySelectorAll('#example tbody tr');
+    const tableRows = document.querySelectorAll('#med tbody tr');
 
     tableRows.forEach(function(row) {
         row.addEventListener('click', function() {
@@ -22,23 +22,17 @@ document.addEventListener('DOMContentLoaded', function() {
         <h2>Médecins</h2>
         <?php require "header.html";?>
         <div class="tablo">
-        <form action="script.php" method="post" class="tab-med">
-        <table id="example">
+        <!--<form action="script.php" method="post" class="tab-med">-->
+        <table id="med">
             <thead>
                 <tr>
-                    <th colspan="10" class="titre">Médecins</th>
+                    <th colspan="4" class="titre">Médecins</th>
                 </tr>
                 <tr>
-                    <td>Id_Patient</td>
+                    <td>Id_Medecin</td>
                     <td>Nom</td>
                     <td>Prenom</td>
                     <td>Civilite</td>
-                    <td>Adresse</td>
-                    <td>Ville</td>
-                    <td>Code postal</td>
-                    <td>Date de naissance</td>
-                    <td>Lieu de naissance</td>
-                    <td>Numéro de sécurité sociale</td>
                 </tr>
             </thead>
             <tbody>
@@ -47,20 +41,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 <td>test1</td>
                 <td>test1</td>
                 <td>test1</td>
-                <td>test1</td>
-                <td>test1</td>
-                <td>test1</td>
-                <td>test1</td>
-                <td>test1</td>
-                <td>test1</td>
             </tr>
             <tr>
-                <td>test2</td>
-                <td>test2</td>
-                <td>test2</td>
-                <td>test2</td>
-                <td>test2</td>
-                <td>test2</td>
                 <td>test2</td>
                 <td>test2</td>
                 <td>test2</td>
@@ -72,19 +54,13 @@ document.addEventListener('DOMContentLoaded', function() {
                 <td>test3</td>
                 <td>test3</td>
                 <td>test3</td>
-                <td>test3</td>
-                <td>test3</td>
-                <td>test3</td>
-                <td>test3</td>
-                <td>test3</td>
-                <td>test3</td>
             </tr>
             </tbody>
         </table>
-    </form>
+    <!--</form>-->
     </div>
     <div class="ams">
-        <form action="index.php" method="post">
+        <form action="ajout.php" method="post">
         <button type="submit" name="choix" value="Ajouter">Ajouter</button>
         <button type="submit" name="choix" value="Modifier" class="amsbouton">Modifier</button>
         <button type="submit" name="choix" value="Supprimer" class="amsbouton">Supprimer</button>
