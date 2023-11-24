@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', function() {
         <h2>Médecins</h2>
         <?php require "header.html";?>
         <div class="tablo">
-        <form action="index.php" method="post" class="tab-med">
+        <form action="script.php" method="post" class="tab-med">
         <table id="example">
             <thead>
                 <tr>

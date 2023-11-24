@@ -32,8 +32,8 @@
             </thead>
             <tbody>
             <?php
-            include "index.php";
-                if (include "index.php"!= true) {
+            include "script.php";
+                if (include "script.php"!= true) {
                     echo "erreur de chargement du fichier php";
                 }
                 $query = mysql_query("SELECT * FROM patient");
@@ -57,7 +57,7 @@
         </table>
     </div>
     
-        <form action="index.php" method="get">
+        <form action="script.php" method="get">
         <button type="submit" name="choix" value="Ajouter">Ajouter</button>
         <button type="submit" name="choix" value="Modifier">Modifier</button>
         <button type="submit" name="choix" value="Supprimer">Supprimer</button>
