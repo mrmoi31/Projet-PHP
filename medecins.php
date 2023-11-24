@@ -22,45 +22,40 @@ document.addEventListener('DOMContentLoaded', function() {
         <h2>Médecins</h2>
         <?php require "header.html";?>
         <div class="tablo">
-        <!--<form action="script.php" method="post" class="tab-med">-->
-        <table id="med">
-            <thead>
-                <tr>
-                    <th colspan="4" class="titre">Médecins</th>
-                </tr>
-                <tr>
-                    <td>Id_Medecin</td>
-                    <td>Nom</td>
-                    <td>Prenom</td>
-                    <td>Civilite</td>
-                </tr>
-            </thead>
-            <tbody>
+        <form action="test.php" method="post" class="tab-med">
+    <table>
+        <thead>
             <tr>
-                <td>test1</td>
-                <td>test1</td>
-                <td>test1</td>
-                <td>test1</td>
+                <th>ID</th>
+                <th>Nom</th>
+                <th>Email</th>
+                <!-- ... autres en-têtes ... -->
+                <th>Sélection</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1</td>
+                <td>John Doe</td>
+                <td>john@example.com</td>
+                <!-- ... autres cellules ... -->
+                <td><input type="radio" name="selectedRow" value="1"></td>
             </tr>
             <tr>
-                <td>test2</td>
-                <td>test2</td>
-                <td>test2</td>
-                <td>test2</td>
-                <?php //echo '<td><input type="checkbox" name="selectedRows[]" value="' . $row['Id_Patient'] . '"></td>'; ?>
+                <td>2</td>
+                <td>Jane Smith</td>
+                <td>jane@example.com</td>
+                <!-- ... autres cellules ... -->
+                <td><input type="radio" name="selectedRow" value="2"></td>
             </tr>
-            <tr>
-                <td>test3</td>
-                <td>test3</td>
-                <td>test3</td>
-                <td>test3</td>
-            </tr>
-            </tbody>
-        </table>
-    <!--</form>-->
-    </div>
+            <!-- ... autres lignes ... -->
+        </tbody>
+    </table>
+    <button type="submit" name="submit">Envoyer</button>
+</form>
+
     <div class="ams">
-        <form action="ajout.php" method="post">
+        <form action="test.php" method="post">
         <button type="submit" name="choix" value="Ajouter">Ajouter</button>
         <button type="submit" name="choix" value="Modifier" class="amsbouton">Modifier</button>
         <button type="submit" name="choix" value="Supprimer" class="amsbouton">Supprimer</button>
