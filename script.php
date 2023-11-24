@@ -1,4 +1,5 @@
 <?php
+
         $server = "localhost";
         $db = "projet-php";
         $login = "root";
@@ -22,7 +23,7 @@
         $dateN = $_POST["dateN"];
         $lieuxN = $_POST["lieuxN"];
         $numSecu = $_POST["numSecu"];
-        
+
         //Vérication de doublon
         $sql = "SELECT * FROM patient WHERE nom = '$nom' AND prenom = '$prenom' AND adresse = '$adresse' AND code_postal = '$code_postal' AND ville = '$ville' AND dateN = '$dateN' AND lieuxN = '$lieuxN' AND numSecu = '$numSecu' ";
         $result = $linkpdo->query($sql);
