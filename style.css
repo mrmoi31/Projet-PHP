@@ -9,6 +9,13 @@
   border-radius: 40px;
   border: 5px solid;
 }
+
+label.log {
+  border: none;
+  border-style: none;
+  background-color: red;
+}
+
 button{
   width: 150px;
   height: 40px;
