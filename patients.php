@@ -32,13 +32,12 @@
             </thead>
             <tbody>
             <?php
-            include "script.php";
-                if (include "script.php"!= true) {
-                    echo "erreur de chargement du fichier php";
-                }
-                $query = mysql_query("SELECT * FROM patient");
 
-                while ($row = mysql_fetch_array($query)) {?>
+            include 'connexionBd.php';
+                $query = $linkpdo->prepare("SELECT * FROM patient");
+                $query-> execute();
+                $array = $query -> fetchAll();
+                while ($row = $array) {?>
                    <tr>
                    <td><?php echo $row['Id_Patient'];?></td>
                    <td><?php echo $row['nom'];?></td>

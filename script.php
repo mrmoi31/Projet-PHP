@@ -14,5 +14,5 @@
                 echo "Erreur lors de l'insertion du patient : " . print_r($linkpdo->errorInfo());
             }
         }            
-        //header('Location: http://localhost/saisie.html');
+        //header('Location: ./saisie.html');
 ?>
