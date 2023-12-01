@@ -2,9 +2,10 @@
 <html lang="fr">
     <head>
         <meta charset="utf-8">
-        <link rel="stylesheet" href="style.css">
+        <link rel="stylesheet" href="index.css">
         <title>Medecins - Cabinet Médical</title>
     </head>
+    <?php require "header.html";?>
     <body>
         
 

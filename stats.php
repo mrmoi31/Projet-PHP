@@ -2,12 +2,12 @@
 <html lang="fr">
     <head>
         <meta charset="utf-8">
-        <link rel="stylesheet" href="style.css">
+        <link rel="stylesheet" href="index.css">
         <title>Stats - Cabinet Médical</title>
     </head>
+    <?php require "header.html";?>
 
 <body>
         <h2>Statistiques</h2>
-        <?php require "header.html";?>
     </body>
 </html>

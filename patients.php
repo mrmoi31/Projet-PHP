@@ -2,20 +2,20 @@
 <html lang="fr">
     <head>
         <meta charset="utf-8">
-        <link rel="stylesheet" href="style.css">
+        <link rel="stylesheet" href="index.css">
         <title>Patients - Cabinet Médical</title>
     </head>
+    <?php require "header.html";?>
 
     <body>
 
         <h2>Patients</h2>
-        <?php require "header.html";?>
 
         <div class="tablo">
         <table>
             <thead>
                 <tr>
-                    <th colspan="10" class="titre">Patients</th>
+                    <th colspan="11" class="titre">Patients</th>
                 </tr>
                 <tr>
                     <td>Id_Patient</td>
@@ -28,6 +28,7 @@
                     <td>Date de naissance</td>
                     <td>Lieu de naissance</td>
                     <td>Numéro de sécurité sociale</td>
+                    <td>Sélection</td>
                 </tr>
             </thead>
             <tbody>
@@ -49,6 +50,7 @@
                    <td><?php echo $row['dateN'];?></td>
                    <td><?php echo $row['lieuxN'];?></td>
                    <td><?php echo $row['numSecu'];?></td>
+                   <td>><input type="radio" name="selectedRow" value="1"></td>
                    </tr>
                 <?php  } ?>
 
@@ -56,10 +58,10 @@
         </table>
     </div>
     
-        <form action="script.php" method="get">
-        <button type="submit" name="choix" value="Ajouter">Ajouter</button>
-        <button type="submit" name="choix" value="Modifier">Modifier</button>
-        <button type="submit" name="choix" value="Supprimer">Supprimer</button>
+        <form action="script.php" method="post">
+        <button type="submit" name="choix" value="AjouterPatient">Ajouter</button>
+        <button type="submit" name="choix" value="ModifierPatient">Modifier</button>
+        <button type="submit" name="choix" value="SupprimerPatient">Supprimer</button>
         </form>
     </body>
 </html>

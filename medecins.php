@@ -2,12 +2,12 @@
 <html lang="fr">
     <head>
         <meta charset="utf-8">
-        <link rel="stylesheet" href="style.css">
+        <link rel="stylesheet" href="index.css">
         <title>Medecins - Cabinet Médical</title>
     </head>
+    <?php require "header.html";?>
 <body>
         <h2>Médecins</h2>
-        <?php require "header.html";?>
         <div class="tablo">
         <form action="test.php" method="post" class="tab-med">
     <table>
