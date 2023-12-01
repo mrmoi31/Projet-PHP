@@ -29,7 +29,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 <th>ID</th>
                 <th>Nom</th>
                 <th>Email</th>
-                <!-- ... autres en-têtes ... -->
                 <th>Sélection</th>
             </tr>
         </thead>
@@ -38,17 +37,14 @@ document.addEventListener('DOMContentLoaded', function() {
                 <td>1</td>
                 <td>John Doe</td>
                 <td>john@example.com</td>
-                <!-- ... autres cellules ... -->
                 <td><input type="radio" name="selectedRow" value="1"></td>
             </tr>
             <tr>
                 <td>2</td>
                 <td>Jane Smith</td>
                 <td>jane@example.com</td>
-                <!-- ... autres cellules ... -->
                 <td><input type="radio" name="selectedRow" value="2"></td>
             </tr>
-            <!-- ... autres lignes ... -->
         </tbody>
     </table>
     <button type="submit" name="submit">Envoyer</button>
