@@ -5,19 +5,6 @@
         <link rel="stylesheet" href="style.css">
         <title>Medecins - Cabinet Médical</title>
     </head>
-<script type="text/javascript">
-document.addEventListener('DOMContentLoaded', function() {
-    const tableRows = document.querySelectorAll('#med tbody tr');
-
-    tableRows.forEach(function(row) {
-        row.addEventListener('click', function() {
-            tableRows.forEach(function(row) {
-                row.classList.remove('selected');
-            });
-            this.classList.add('selected');
-        });
-    });
-});</script>
 <body>
         <h2>Médecins</h2>
         <?php require "header.html";?>
@@ -51,7 +38,7 @@ document.addEventListener('DOMContentLoaded', function() {
 </form>
 
     <div class="ams">
-        <form action="test.php" method="post">
+        <form action="ajouter.php" method="post">
         <button type="submit" name="choix" value="Ajouter">Ajouter</button>
         <button type="submit" name="choix" value="Modifier" class="amsbouton">Modifier</button>
         <button type="submit" name="choix" value="Supprimer" class="amsbouton">Supprimer</button>
