@@ -38,7 +38,7 @@
 </form>
 
     <div class="ams">
-        <form action="ajouter.php" method="post">
+        <form action="formAjout.php" method="post">
         <button type="submit" name="choix" value="Ajouter">Ajouter</button>
         <button type="submit" name="choix" value="Modifier" class="amsbouton">Modifier</button>
         <button type="submit" name="choix" value="Supprimer" class="amsbouton">Supprimer</button>
