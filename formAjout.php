@@ -5,11 +5,16 @@
         <link rel="stylesheet" href="index.css">
         <title>Medecins - Cabinet Médical</title>
     </head>
-    <?php require "header.html";?>
+    <?php 
+        require "header.html";
+        require "test.php";
+        $civilite = $_POST["civilite"];
+    ?>
     <body>
+       
         
 
-        <form action="medecins.php" method="post">
+        <form action="testTheo.php" method="post">
         <label>Civilite :</label>
         <input type="text" name="civ" id="civ"><br>
 
@@ -19,7 +24,7 @@
         <label>Prenom :</label>
         <input type="text" name="prenom" id="prenom"><br>
 
-        <button type="submit" name="send" value="send" action="ajout.php">Envoyer</button>
+        <button type="submit" name="send" value="send" action="ajoutTest()">Envoyer</button>
         <button type="reset" name="reset" value="reset">Reset</button>
         </form>
 
@@ -30,3 +35,4 @@
 
 
     </body>
+</html>
