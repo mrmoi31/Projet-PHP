@@ -57,7 +57,7 @@
 
 <?php include "testajout.php";
 if (isset($_POST['send'])) {
-    ajoutMedecin();
+    ajoutPatien();
 } ?>
 
 
