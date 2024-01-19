@@ -38,15 +38,22 @@
                 <?php  } ?>
         </tbody>
     </table>
-    <button type="submit" name="submit">Envoyer</button>
+    
 </form>
 
     <div class="ams">
-        <form action="formAjout.php" method="post">
-        <button type="submit" name="choix" value="Ajouter">Ajouter</button>
+        <form action="formAjoutMedecin.php" method="post">
+        <button type="submit" name="choix" value="Ajouter" >Ajouter</button>
+        </form>
+        <form method="post">
         <button type="submit" name="choix" value="Modifier" class="amsbouton">Modifier</button>
         <button type="submit" name="choix" value="Supprimer" class="amsbouton">Supprimer</button>
         </form>
     </div>
     </body>
 </html>
+
+<?php include "fonction.php";
+if (isset($_POST['Supprimer'])) {
+    supprimer();
+} ?>
