@@ -52,12 +52,8 @@
                    <td><?php echo $row['lieuNaissance'];?></td>
                    <td><?php echo $row['numSecu'];?></td>
                    <td><?php echo $row['id_medecin'];?></td>
-<<<<<<< Updated upstream
                    <td> <form method="post">
                     <button type="submit" name="selectedRow" value="<?php echo $row['id_patient']; ?>">Supprimer</button></form></td>
-=======
-                   <td><button><input type="submit" name="supprimer" value="supprimer">Supprimer</button></td>
->>>>>>> Stashed changes
                    </tr>
                   
                    
