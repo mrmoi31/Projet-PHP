@@ -48,7 +48,7 @@
     </table>
 </form>
     <div class="ams">
-        <form action="formAjoutMedecin.php" method="post">
+        <form action="formAjoutConsultation.php" method="post">
         <button type="submit" name="choix" value="Ajouter" >Ajouter</button>
         </form>
         <form method="post">

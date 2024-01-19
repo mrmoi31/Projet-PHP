@@ -10,7 +10,7 @@
     ?>
     <body>
         <form method="post">
-        <label>Medecin :</label><br>
+        <label>Medecin :</label>
         <input type="text" name="medecin" id="medecin"><br>
 
         <label>Date RDV :</label>
