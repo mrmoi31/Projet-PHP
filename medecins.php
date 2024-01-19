@@ -15,23 +15,27 @@
             <tr>
                 <th>ID</th>
                 <th>Nom</th>
-                <th>Email</th>
+                <th>Prenom</th>
+                <th>Civilite</th>
                 <th>Sélection</th>
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <td>1</td>
-                <td>John Doe</td>
-                <td>john@example.com</td>
-                <td><input type="radio" name="selectedRow" value="1"></td>
-            </tr>
-            <tr>
-                <td>2</td>
-                <td>Jane Smith</td>
-                <td>jane@example.com</td>
-                <td><input type="radio" name="selectedRow" value="2"></td>
-            </tr>
+           <?php
+
+            include 'connexionBd.php';
+                $query = $linkpdo->prepare("SELECT * FROM medecin");
+                $query-> execute();
+             
+                while ($row = $query -> fetch()) {?>
+                   <tr>
+                   <td><?php echo $row['id_medecin'];?></td>
+                   <td><?php echo $row['nom'];?></td>
+                   <td><?php echo $row['prenom'];?></td>
+                   <td><?php echo $row['civilite'];?></td>
+                   <td><input type="radio" name="selectedRow" value="1"></td>
+                   </tr>
+                <?php  } ?>
         </tbody>
     </table>
     <button type="submit" name="submit">Envoyer</button>

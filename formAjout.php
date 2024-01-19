@@ -7,7 +7,7 @@
     </head>
     <?php 
         require "header.html";
-        include "connexionBd.php";
+       
  
     ?>
     <body>
@@ -34,6 +34,7 @@
 </body>
 
 <?php  
+ include "connexionBd.php";
  //Recupérer les données
  $civilite = $_POST["civilite"];
  $nom = $_POST["nom"];
