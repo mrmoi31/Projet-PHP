@@ -52,7 +52,7 @@
                    <td><?php echo $row['lieuNaissance'];?></td>
                    <td><?php echo $row['numSecu'];?></td>
                    <td><?php echo $row['id_medecin'];?></td>
-                   <td><input type="radio" name="selectedRow" value="1"></td>
+                   <button><input type="submit" name="supprimer" value="supprimer">Supprimer</button>
                    </tr>
                 <?php  } ?>
 
@@ -62,8 +62,22 @@
     
         <form action="formAjoutPatient.php" method="post">
         <button type="submit" name="choix" value="AjouterPatient">Ajouter</button>
-        <button type="submit" name="choix" value="ModifierPatient">Modifier</button>
-        <button type="submit" name="choix" value="SupprimerPatient">Supprimer</button>
         </form>
-    </body>
+        <form>
+        <button type="submit" name="choix" value="ModifierPatient">Modifier</button>
+        </form>
+        </body>
 </html>
+
+<?php
+include "connexionBd.php";
+if (isset($_POST['supprimer'])) {
+        
+       $sql = "DELETE FROM patient WHERE id_patient = $id_patient";
+       if ($linkpdo->exec($Sql) !== false){
+        echo "Patient Supprimer";
+    }else{
+        echo "Erreur lors de la suppresion du patient : " . print_r($linkpdo->errorInfo());
+    }
+       
+    }?>
