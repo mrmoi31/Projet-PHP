@@ -23,8 +23,8 @@
                     <td>Prenom</td>
                     <td>Civilite</td>
                     <td>Adresse</td>
+                    <td>Code Postal</td>
                     <td>Ville</td>
-                    <td>Code postal</td>
                     <td>Date de naissance</td>
                     <td>Lieu de naissance</td>
                     <td>Numéro de sécurité sociale</td>
@@ -52,8 +52,12 @@
                    <td><?php echo $row['lieuNaissance'];?></td>
                    <td><?php echo $row['numSecu'];?></td>
                    <td><?php echo $row['id_medecin'];?></td>
+<<<<<<< Updated upstream
                    <td> <form method="post">
                     <button type="submit" name="selectedRow" value="<?php echo $row['id_patient']; ?>">Supprimer</button></form></td>
+=======
+                   <td><button><input type="submit" name="supprimer" value="supprimer">Supprimer</button></td>
+>>>>>>> Stashed changes
                    </tr>
                   
                    
@@ -63,14 +67,15 @@
             </tbody>
         </table>
     </div>
+    <div class="addButton">
+    <form action="formAjoutPatient.php" method="post">
+    <button type="submit" name="choix" value="AjouterPatient">Ajouter</button></form>
+
+    <form>
+    <button type="submit" name="choix" value="ModifierPatient">Modifier</button></form>
+    </div>
     
-        <form action="formAjoutPatient.php" method="post">
-        <button type="submit" name="choix" value="AjouterPatient">Ajouter</button>
-        </form>
-        <form>
-        <button type="submit" name="choix" value="ModifierPatient">Modifier</button>
-        </form>
-        </body>
+    </body>
 </html>
 
 <?php include "fonction.php";
