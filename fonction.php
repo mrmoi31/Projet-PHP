@@ -23,6 +23,11 @@ function ajoutMedecin(){
      }
  } }
 
+ function ajoutConsultation(){
+     include "connexionBd.php";
+     
+ }
+
  function ajoutPatien(){
     include "connexionBd.php";
     //Recupérer les données
