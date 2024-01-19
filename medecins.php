@@ -53,7 +53,15 @@
     </body>
 </html>
 
-<?php include "fonction.php";
+<?php 
+include "connexionBd.php";
 if (isset($_POST['Supprimer'])) {
-    supprimer();
+    if (isset($_POST["selectedRow"])) {
+        $idMedecinASupprimer = $_POST["selectedRow"];
+        $query = $linkpdo->prepare("DELETE FROM medecin WHERE id_medecin = ?");
+        $query->execute([$idMedecinASupprimer]);
+    }
+
+
+   
 } ?>

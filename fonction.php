@@ -60,34 +60,25 @@ function ajoutMedecin(){
              }}
 
 function supprimer(){
-    function supprimerMedecin($idMedecin) {
-        global $linkpdo; // Utilisez la connexion à la base de données dans cette fonction
     
-        // Vérifier si le médecin existe avant de le supprimer
-        $verifSql = "SELECT * FROM medecin WHERE id_medecin = :idMedecin";
-        $verifStmt = $linkpdo->prepare($verifSql);
-        $verifStmt->bindParam(':idMedecin', $idMedecin, PDO::PARAM_INT);
-        $verifStmt->execute();
+        if(isset($_POST['id_medecin'])) {
+            $idMedecinASupprimer = $_POST['id_medecin'];
     
-        if ($verifStmt->rowCount() > 0) {
-            // Le médecin existe, supprimer
-            $deleteSql = "DELETE FROM medecin WHERE id_medecin = :idMedecin";
-            $deleteStmt = $linkpdo->prepare($deleteSql);
-            $deleteStmt->bindParam(':idMedecin', $idMedecin, PDO::PARAM_INT);
+            // Utilisez une requête DELETE pour supprimer le médecin de la base de données
+            $requeteSuppression = "DELETE FROM medecins WHERE id_medecin = $idMedecinASupprimer";
     
-            if ($deleteStmt->execute()) {
+            if ($connexion->query($requeteSuppression) === TRUE) {
                 echo "Le médecin a été supprimé avec succès.";
             } else {
-                echo "Erreur lors de la suppression du médecin : " . print_r($deleteStmt->errorInfo());
+                echo "Erreur lors de la suppression du médecin : " . $connexion->error;
             }
         } else {
-            echo "Le médecin avec l'ID $idMedecin n'existe pas.";
+            echo "Veuillez sélectionner un médecin à supprimer.";
         }
     }
-    
 
 
-}
+
 
             
 
