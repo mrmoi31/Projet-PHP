@@ -23,8 +23,8 @@
                     <td>Prenom</td>
                     <td>Civilite</td>
                     <td>Adresse</td>
+                    <td>Code Postal</td>
                     <td>Ville</td>
-                    <td>Code postal</td>
                     <td>Date de naissance</td>
                     <td>Lieu de naissance</td>
                     <td>Numéro de sécurité sociale</td>
@@ -63,14 +63,15 @@
             </tbody>
         </table>
     </div>
+    <div class="addButton">
+    <form action="formAjoutPatient.php" method="post">
+    <button type="submit" name="choix" value="AjouterPatient">Ajouter</button></form>
+
+    <form>
+    <button type="submit" name="choix" value="ModifierPatient">Modifier</button></form>
+    </div>
     
-        <form action="formAjoutPatient.php" method="post">
-        <button type="submit" name="choix" value="AjouterPatient">Ajouter</button>
-        </form>
-        <form>
-        <button type="submit" name="choix" value="ModifierPatient">Modifier</button>
-        </form>
-        </body>
+    </body>
 </html>
 
 <?php include "fonction.php";
