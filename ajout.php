@@ -46,13 +46,13 @@
         $prenom = $_POST["prenom"];
 
         //Vérication de doublon
-        $sql = "SELECT * FROM medecins WHERE civilite = '$civilite' AND nom = '$nom' AND prenom = '$prenom'";
+        $sql = "SELECT * FROM medecin WHERE civilite = '$civilite' AND nom = '$nom' AND prenom = '$prenom'";
         $result = $linkpdo->query($sql);
     
         if ($result->rowCount() > 0 ){
-            echo "Ce medecins existe deja dans la BD.";
+            echo "Ce medecin existe deja dans la BD.";
         }else{
-            $insertSql = "INSERT INTO patient(civilite, nom, prenom) VALUES('$civilite', '$nom', '$prenom')";
+            $insertSql = "INSERT INTO medecin(civilite, nom, prenom) VALUES('$civilite', '$nom', '$prenom')";
     
             if ($linkpdo->exec($insertSql) !== false){
                 echo "Medecin enregistrer";
