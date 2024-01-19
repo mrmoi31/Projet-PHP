@@ -33,7 +33,8 @@
                    <td><?php echo $row['nom'];?></td>
                    <td><?php echo $row['prenom'];?></td>
                    <td><?php echo $row['civilite'];?></td>
-                   <td><input type="radio" name="selectedRow" value="1"></td>
+                   <td> <form method="post">
+                    <button type="submit" name="supprimer" value="<?php echo $row['id_medecin']; ?>">Supprimer</button></form></td>
                    </tr>
                 <?php  } ?>
         </tbody>
@@ -47,21 +48,15 @@
         </form>
         <form method="post">
         <button type="submit" name="choix" value="Modifier" class="amsbouton">Modifier</button>
-        <button type="submit" name="choix" value="Supprimer" class="amsbouton">Supprimer</button>
+      
         </form>
     </div>
     </body>
 </html>
 
-<?php 
-include "connexionBd.php";
-if (isset($_POST['Supprimer'])) {
-    if (isset($_POST["selectedRow"])) {
-        $idMedecinASupprimer = $_POST["selectedRow"];
-        $query = $linkpdo->prepare("DELETE FROM medecin WHERE id_medecin = ?");
-        $query->execute([$idMedecinASupprimer]);
-    }
 
-
-   
-} ?>
+<?php include "fonction.php";
+if (isset($_POST['supprimer'])) {
+    $id_medecin = $_POST['supprimer'];
+    supprimerMedecin($id_medecin);}
+    ?> 

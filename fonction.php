@@ -76,10 +76,44 @@ function supprimer(){
             echo "Veuillez sélectionner un médecin à supprimer.";
         }
     }
+    function supprimerPatient($id_patient) {
+        include "connexionBd.php";
+       
+    
+        $sql = "DELETE FROM patient WHERE id_patient = :id_patient";
+        $stmt = $linkpdo->prepare($sql);
+        $stmt->bindParam(':id_patient', $id_patient, PDO::PARAM_INT);
+    
+        if ($stmt->execute()) {
+            echo "Actualisé la page pour finir la suppresion";
+        } else {
+            echo "Erreur lors de la suppression du patient : " . print_r($stmt->errorInfo(), true);
+        }
+    }
+
+    function supprimerMedecin($id_medecin) {
+        include "connexionBd.php";
+       
+    
+        $sql = "DELETE FROM medecin WHERE id_medecin = :id_medecin";
+        $sql2 = "DELETE FROM patient WHERE id_medecin = :id_medecin";
+        $stmt = $linkpdo->prepare($sql);
+        $stmt2 = $linkpdo->prepare($sql2);
+        $stmt->bindParam(':id_medecin', $id_medecin, PDO::PARAM_INT);
+        $stmt2->bindParam(':id_medecin', $id_medecin, PDO::PARAM_INT);
+    
+        if ($stmt2->execute() && $stmt->execute()) {
+            echo "Actualisé la page pour finir la suppresion";
+        } else {
+            echo "Erreur lors de la suppression du medecin : " . print_r($stmt->errorInfo(), true);
+        }
+    }
+    
+       
+   ?>
 
 
 
 
             
 
-   ?>
