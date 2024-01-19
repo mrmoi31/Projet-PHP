@@ -53,10 +53,8 @@
 
 <?php include "fonction.php";
 if (isset($_POST['send'])) {
-    ajoutPatien();
+    modifPatient();
 } ?>
 
 
 </html>
-
-

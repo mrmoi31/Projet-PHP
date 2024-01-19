@@ -54,6 +54,8 @@
                    <td><?php echo $row['id_medecin'];?></td>
                    <td> <form method="post">
                     <button type="submit" name="selectedRow" value="<?php echo $row['id_patient']; ?>"><img src="./ressources/trash.png" id="trash"></button></form></td>
+                    <td><form action="formModifPatient.php" method="post">
+                    <button type="submit" name="choix" value="ModifierPatient"><img src="./ressources/pen.png" id="pen"></button></form></td>
                    </tr>
                 <?php  } ?>
 
@@ -64,8 +66,7 @@
     <form action="formAjoutPatient.php" method="post">
     <button type="submit" name="choix" value="AjouterPatient"><img src="./ressources/add.png" id="add"></button></form>
 
-    <form>
-    <button type="submit" name="choix" value="ModifierPatient"><img src="./ressources/pen.png" id="pen"></button></form>
+
     </div>
     
     </body>

@@ -9,7 +9,7 @@
 <body>
         <h2>Médecins</h2>
         <div class="tablo">
-        <form action="test.php" method="post" class="tab-med">
+        <form method="post" class="tab-med">
     <table>
         <thead>
             <tr>
@@ -35,6 +35,10 @@
                    <td><?php echo $row['civilite'];?></td>
                    <td> <form method="post">
                     <button type="submit" name="supprimer" value="<?php echo $row['id_medecin']; ?>">Supprimer</button></form></td>
+                    <td><form action="formModifMedecin.php" method="post">
+                    <button type="submit" name="choix" value="Modifier" class="amsbouton">Modifier</button>
+      
+        </form></td>
                    </tr>
                 <?php  } ?>
         </tbody>
@@ -46,10 +50,7 @@
         <form action="formAjoutMedecin.php" method="post">
         <button type="submit" name="choix" value="Ajouter" >Ajouter</button>
         </form>
-        <form method="post">
-        <button type="submit" name="choix" value="Modifier" class="amsbouton">Modifier</button>
       
-        </form>
     </div>
     </body>
 </html>
