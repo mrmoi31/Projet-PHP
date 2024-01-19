@@ -6,11 +6,7 @@
         <link rel="stylesheet" href="index.css">
         <title>Medecins - Cabinet Médical</title>
     </head>
-    <?php 
-        require "header.html";
-      
- 
-    ?>
+    <?php require "header.html"; ?>
     <body>
         <form method="post">
         <label>Civilite :</label><br>
@@ -43,10 +39,17 @@
         <label>Numéro Sécu :</label>
         <input type="text" name="numSecu" id="numSecu"><br>
 
-        <label> Medecin :</label>
-        <input type="text" name="id_medecin" id="id_medecin"><br>
+        <label for="pet-select">Medecin :</label>
 
-        
+        <select name="pets" id="pet-select">
+          <option value="">--Please choose an option--</option>
+          <option value="dog">Dog</option>
+          <option value="cat">Cat</option>
+          <option value="hamster">Hamster</option>
+          <option value="parrot">Parrot</option>
+          <option value="spider">Spider</option>
+          <option value="goldfish">Goldfish</option>
+        </select><br>
 
         <button type="submit" name="send" value="send">Envoyer</button>
         <button type="reset" name="reset" value="reset">Reset</button>

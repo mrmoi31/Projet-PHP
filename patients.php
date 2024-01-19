@@ -55,9 +55,6 @@
                    <td> <form method="post">
                     <button type="submit" name="selectedRow" value="<?php echo $row['id_patient']; ?>">Supprimer</button></form></td>
                    </tr>
-                  
-                   
-                
                 <?php  } ?>
 
             </tbody>
@@ -78,4 +75,4 @@
 if (isset($_POST['selectedRow'])) {
     $id_patient = $_POST['selectedRow'];
     supprimerPatient($id_patient);}
-    ?>
+?>

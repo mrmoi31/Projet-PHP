@@ -25,7 +25,7 @@ input#login, input#mdp{
 }
 
 button{
-  width: 150px;
+  width: 120px;
   height: 40px;
   border-radius: 40px;
   background-color: #373737;
@@ -33,6 +33,7 @@ button{
   border : 4px double black;
   font-family: revert;
   font-weight: bold;
+  margin: 1%;
 }
 
 button:hover{
@@ -61,13 +62,16 @@ a, a:visited {
 nav {
   background: none;
   border-radius: 30px;
-  box-shadow: 5px 5px 5px 5px #caf0f8;
+  /*box-shadow: 7px 7px 7px 7px #caf0f8;*/
+  border-color: #caf0f8;
+  border-style: solid;
 }
 
 nav ul li {
+  background-color: #90CAF9;
   display: inline-block;
   list-style: none;
-  font-size: 1.5rem;
+  font-size: 1.4rem;
   padding: 0 10px;
   margin: 0 20px;
   cursor: pointer;
@@ -78,7 +82,7 @@ nav > ul > li:after , nav > ul > li:before{
   content: '';
   width: 0;
   height: 3px;
-  background: #00b4d8;
+  background: #64B5F6;
   position: absolute;
   transition: all 0.3s;
 }
@@ -103,31 +107,34 @@ h2{
   font-size: xx-large;
   text-align: center;
   font-weight: bold;
+  background-color: #90CAF9;
+  color: white;
 }
 .titre{
   height: 50%;
   width: 100%;
   overflow: hidden;
   margin-bottom: 1%;
-  background-color: rgb(90, 128, 255, 1.0);
+  background-color: #90CAF9;
 }
 .caducée{
   padding-top: 2%;
   margin:auto;
   text-align: center;
+  background-color: #90CAF9;
 }
 #caducée{
   width: 20%;
   height: 20%;
 }
 body{
-  background-color: white;
+  background-color: 90CAF9;
 }
 table{
   text-align: center;
   width: 80%;
   margin-top: 3%;
-  border-radius: 40px;
+  border-radius: 10px;
   border: 5px solid;
   overflow: hidden;
   background-clip: padding-box;
@@ -143,6 +150,9 @@ th{
 }
 tbody > tr:hover{
   background-color: #808080;
+}
+.addButton{
+  display: flex;
 }
 .tablo{
   display: flex;

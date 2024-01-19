@@ -5,6 +5,7 @@
         <link rel="stylesheet" href="index.css">
         <title>Consultations - Cabinet Médical</title>
     </head>
+    <?php require "header.html";?>
 <body>
     <h2>Consultations</h2>
     <div class="tablo">
