@@ -80,23 +80,7 @@ function ajoutMedecin(){
                  }
              }}
 
-function supprimer(){
-    
-        if(isset($_POST['id_medecin'])) {
-            $idMedecinASupprimer = $_POST['id_medecin'];
-    
-            // Utilisez une requête DELETE pour supprimer le médecin de la base de données
-            $requeteSuppression = "DELETE FROM medecins WHERE id_medecin = $idMedecinASupprimer";
-    
-            if ($connexion->query($requeteSuppression) === TRUE) {
-                echo "Le médecin a été supprimé avec succès.";
-            } else {
-                echo "Erreur lors de la suppression du médecin : " . $connexion->error;
-            }
-        } else {
-            echo "Veuillez sélectionner un médecin à supprimer.";
-        }
-    }
+
     function supprimerPatient($id_patient) {
         include "connexionBd.php";
        
@@ -129,6 +113,63 @@ function supprimer(){
             echo "Erreur lors de la suppression du medecin : " . print_r($stmt->errorInfo(), true);
         }
     }
+
+    function modifMedecin(){
+
+        include "connexionBd.php";
+        //Recupérer les données
+        $civilite = isset($_POST["civilite"]) ? $_POST["civilite"] : '';
+           $nom = isset($_POST["nom"]) ? $_POST["nom"] : '';
+           $prenom = isset($_POST["prenom"]) ? $_POST["prenom"] : '';
+       
+        //Vérication de doublon
+        $sql = "SELECT * FROM medecin WHERE civilite = '$civilite' AND nom = '$nom' AND prenom = '$prenom'";
+        $result = $linkpdo->query($sql);
+       
+        if ($result->rowCount() > 0 ){
+            echo "Ce medecin existe deja dans la BD.";
+        }else{
+            $updateSql = "UPDATE medecin SET civilite = '$civilite', nom = '$nom', prenom = '$prenom'";
+       
+            if ($linkpdo->exec($updateSql) !== false){
+                echo "Medecin enregistrer";
+            }else{
+                echo "Erreur lors de l'insertion du medecin : " . print_r($linkpdo->errorInfo());
+            }
+        } 
+
+    }
+    
+    function modifPatient(){
+        include "connexionBd.php";
+        //Recupérer les données
+                $civilite = isset($_POST["civilite"]) ? $_POST["civilite"] : '';
+                $nom = isset($_POST["nom"]) ? $_POST["nom"] : '';
+                $prenom = isset($_POST["prenom"]) ? $_POST["prenom"] : '';
+                $adresse = isset($_POST["adresse"]) ? $_POST["adresse"] : '';
+                $ville = isset($_POST["ville"]) ? $_POST["ville"] : '';
+                $code_postal = isset($_POST["codePostal"]) ? $_POST["codePostal"] : '';
+                $dateN = isset($_POST["dateNaissance"]) ? $_POST["dateNaissance"] : '';
+                $lieuxN = isset($_POST["lieuNaissance"]) ? $_POST["lieuNaissance"] : '';
+                $numSecu = isset($_POST["numSecu"]) ? $_POST["numSecu"] : '';
+                $id_medecin = isset($_POST["id_medecin"]) ? $_POST["id_medecin"] : '';
+                
+        
+                 //Vérication de doublon
+                 $sql = "SELECT * FROM patient WHERE civilite = '$civilite' AND nom = '$nom' AND prenom = '$prenom' AND adresse = '$adresse' AND codePostal = '$code_postal' AND ville = '$ville' AND dateNaissance = '$dateN' AND lieuNaissance = '$lieuxN' AND numSecu = '$numSecu' ";
+                 $result = $linkpdo->query($sql);
+         
+                 if ($result->rowCount() > 0 ){
+                     echo "Ce patient existe deja dans la BD.";
+                 }else{
+                     $updateSql = "UPDATE patient SET civilite = '$civilite', nom = '$nom', prenom = '$prenom', adresse = '$adresse', codePostal = '$code_postal', ville = '$ville', dateNaissance = '$dateN', lieuNaissance = '$lieuxN', numSecu = '$numSecu', id_medecin = '$id_medecin' ";
+         
+                     if ($linkpdo->exec($updateSql) !== false){
+                         echo "Patient enregistrer";
+                     }else{
+                         echo "Erreur lors de la modification du patient : " . print_r($linkpdo->errorInfo());
+                     }
+                 }}
     
        
    ?>
