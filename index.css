@@ -36,20 +36,25 @@ input#login, input#mdp{
 }
 
 button{
-  width: 120px;
-  height: 40px;
+  width: 100px;
+  height: 50px;
   border-radius: 40px;
-  background-color: #373737;
+  background-color: none;
   color: white;
   border : 4px double black;
-  font-family: revert;
-  font-weight: bold;
   margin: 1%;
 }
 
-button:hover{
-  background-color: whitesmoke;
-  color: black;
+#add{
+  height: 100%;
+}
+
+#pen{
+  height: 100%;
+}
+
+#trash{
+  height: 100%;
 }
 
 //

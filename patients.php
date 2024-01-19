@@ -53,7 +53,7 @@
                    <td><?php echo $row['numSecu'];?></td>
                    <td><?php echo $row['id_medecin'];?></td>
                    <td> <form method="post">
-                    <button type="submit" name="selectedRow" value="<?php echo $row['id_patient']; ?>">Supprimer</button></form></td>
+                    <button type="submit" name="selectedRow" value="<?php echo $row['id_patient']; ?>"><img src="./ressources/trash.png" id="trash"></button></form></td>
                    </tr>
                 <?php  } ?>
 
@@ -62,10 +62,10 @@
     </div>
     <div class="addButton">
     <form action="formAjoutPatient.php" method="post">
-    <button type="submit" name="choix" value="AjouterPatient">Ajouter</button></form>
+    <button type="submit" name="choix" value="AjouterPatient"><img src="./ressources/add.png" id="add"></button></form>
 
     <form>
-    <button type="submit" name="choix" value="ModifierPatient">Modifier</button></form>
+    <button type="submit" name="choix" value="ModifierPatient"><img src="./ressources/pen.png" id="pen"></button></form>
     </div>
     
     </body>
