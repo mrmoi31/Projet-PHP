@@ -40,7 +40,7 @@
         <input type="text" name="numSecu" id="numSecu"><br>
 
         <label>Medecin :</label>
-        <input type="text" name="id_medecin" id="id_medecin" value="Entrez l'id du medecin"><br>
+        <input type="text" name="id_medecin" id="id_medecin" placeholder="Entrez l'id du medecin"><br>
 
         
 

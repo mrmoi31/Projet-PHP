@@ -11,7 +11,7 @@
         <label for="pet-select">Medecin :</label>
 
         <label>Medecin :</label>
-        <input type="text" name="id_medecin" id="id_medecin" value="Entrez l'id du medecin"><br>
+        <input type="text" name="id_medecin" id="id_medecin" placeholder="Entrez l'id du medecin"><br>
 
         <label>Date RDV :</label>
         <input type="date" name="date" id="date"><br>
@@ -20,7 +20,7 @@
         <input type="number" name="heure" id="heure"><br>
 
         <label>Patient :</label>
-        <input type="text" name="id_patient" id="id_patient" value="Entrez l'id du patient"><br>
+        <input type="text" name="id_patient" id="id_patient" placeholder="Entrez l'id du patient"><br>
 
         <button type="submit" name="send" value="send">Envoyer</button>
         <button type="reset" name="reset" value="reset">Reset</button>
