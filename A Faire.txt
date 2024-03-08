@@ -1,6 +1,6 @@
 ConnexionBD.php
 Consultations.php a réécrire
-Fonction.php a répartir dans les API
+~~Fonction.php a répartir dans les API~~
 Form
 Header.html
 Index.html
@@ -11,9 +11,9 @@ Patient.php a réecrire
 Stat.php a faire
 
 API auth a importer
-APIMedecin
-APIUsagers
-APIConsultation
+~~APIMedecin~~
+~~APIUsagers~~
+~~APIConsultation~~
 APIStat
 
     Note
