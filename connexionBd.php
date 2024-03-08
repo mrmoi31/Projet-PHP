@@ -1,8 +1,8 @@
 <?php
-    $server = "mysql-medecin.alwaysdata.net";
+    $server = "localhost";
     $db = "medecin_projet_php";
-    $login = "medecin";
-    $mdp = "\$iutinfo";
+    $login = "root";
+    $mdp = "";
 
     //Connection base de donnée
     try{
