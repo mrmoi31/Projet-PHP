@@ -15,3 +15,9 @@ APIMedecin
 APIUsagers
 APIConsultation
 APIStat
+
+    Note
+    $server = "mysql-medecin.alwaysdata.net";
+    $db = "medecin_projet_php";
+    $login = "medecin";
+    $mdp = "\$iutinfo";
