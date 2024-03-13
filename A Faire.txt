@@ -10,7 +10,7 @@ Menu.php
 Patient.php a réecrire
 Stat.php a faire
 
-API auth a importer
+~~API auth a importer~~
 ~~APIMedecin~~
 ~~APIUsagers~~
 ~~APIConsultation~~
