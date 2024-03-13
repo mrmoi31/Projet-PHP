@@ -33,7 +33,7 @@
 
 </body>
 
-<?php include "fonction.php";
+<?php include "API/APIMedecin.php";
 if (isset($_POST['send'])) {
     modifMedecin();
 } ?>
