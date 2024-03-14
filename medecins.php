@@ -23,7 +23,7 @@
         <tbody>
            <?php
 
-            include 'connexionBd.php';
+            include 'connexionBd.php';         
                 $query = $linkpdo->prepare("SELECT * FROM medecin");
                 $query-> execute();
              
