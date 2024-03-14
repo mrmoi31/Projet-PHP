@@ -1,7 +1,8 @@
-<?php
 
+function connexionUser()
+{
     $server = "localhost";
-    $db = "projet-apii";
+    $db = "projet-api-bd";
     $login = "root";
     $mdp = "";
 
@@ -13,5 +14,6 @@
     catch (Exception $e) {
         die('Erreur: ' . $e->getMessage());
     }
+}
 
-?>
+function connexionGen()
