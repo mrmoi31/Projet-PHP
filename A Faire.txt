@@ -21,3 +21,8 @@ APIStat
     $db = "medecin_projet_php";
     $login = "medecin";
     $mdp = "\$iutinfo";
+
+
+Ajout Medecin Fonctionnel
+Modif Medecin Fonctionnel Rajouter les parametre entrée deja affiché
+Supprimer Medecin A faire
