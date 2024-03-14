@@ -16,6 +16,8 @@ Stat.php a faire
 ~~APIConsultation~~
 APIStat
 
+.htaccess à faire
+
     Note
     $server = "mysql-medecin.alwaysdata.net";
     $db = "medecin_projet_php";

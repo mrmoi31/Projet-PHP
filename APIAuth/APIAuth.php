@@ -60,12 +60,8 @@ $http_method = $_SERVER['REQUEST_METHOD'];
         die('json encode ERROR : '.json_last_error_msg());
         /// Affichage de la réponse (Retourné au client)
         echo $json_response;
-
-  
        
     }
-
-    
 
 }
 

@@ -1,11 +1,23 @@
 <?php
 
-function ajoutMedecin(){
+function ajoutMedecin($data){
  include "connexionBd.php";
  //Recupérer les données
-    $civilite = isset($_POST["civilite"]) ? $_POST["civilite"] : '';
-    $nom = isset($_POST["nom"]) ? $_POST["nom"] : '';
-    $prenom = isset($_POST["prenom"]) ? $_POST["prenom"] : '';
+
+    $http_method = $_SERVER['REQUEST_METHOD'];
+    if($http_method == "POST") {
+
+        $data = (array) json_decode(file_get_contents('php://input'), TRUE);
+
+        //if the users exist, create a JWT
+        if (!isset($data['civilite']) || !isset($data['nom'] || !isset($data['prenom']))) {
+            deliver_response(400, "Données manquantes");
+        }
+    }else{
+
+    $civilite = $data['civilite'];
+    $nom = $data['nom'];
+    $prenom = $data['prenom'];
 
  //Vérication de doublon
  $sql = "SELECT * FROM medecin WHERE civilite = '$civilite' AND nom = '$nom' AND prenom = '$prenom'";
@@ -21,10 +33,21 @@ function ajoutMedecin(){
      }else{
          echo "Erreur lors de l'insertion du medecin : " . print_r($linkpdo->errorInfo());
      }
- } }
+ }}}
 
-function supprimerMedecin($id_medecin) {
+function supprimerMedecin($data) {
     include "connexionBd.php";
+
+    $http_method = $_SERVER['REQUEST_METHOD'];
+    if($http_method == "POST") {
+
+        $data = (array) json_decode(file_get_contents('php://input'), TRUE);
+
+        //if the users exist, create a JWT
+        if (!isset($data['civilite']) || !isset($data['nom'] || !isset($data['prenom']))) {
+            deliver_response(400, "Données manquantes");
+        }
+    }else{
 
     $sql = "DELETE FROM medecin WHERE id_medecin = :id_medecin";
     $sql2 = "DELETE FROM usager WHERE id_medecin = :id_medecin";
