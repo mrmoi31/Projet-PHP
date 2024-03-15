@@ -56,6 +56,7 @@
 </html>
 
 
+<!-- a supprimer-->
 <?php include "API/APIMedecin.php";
 if (isset($_POST['supprimer'])) {
     $id_medecin = $_POST['supprimer'];
