@@ -1,4 +1,5 @@
 <?php
+function connexionBdAuth() {
     $server = "localhost";
     $db = "projet-api-bd";
     $login = "root";
@@ -11,6 +12,6 @@
     //Verification connection
     catch (Exception $e) {
         die('Erreur: ' . $e->getMessage());
-    }
+    }}
 ?>
 

@@ -1,5 +1,7 @@
 <?php
 
+function connexionBdGen() {
+
     $server = "localhost";
     $db = "projet-apii";
     $login = "root";
@@ -12,6 +14,6 @@
     //Verification connection
     catch (Exception $e) {
         die('Erreur: ' . $e->getMessage());
-    }
+    }}
 
 ?>
