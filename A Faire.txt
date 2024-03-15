@@ -1,14 +1,19 @@
+   Note
+    $server = "mysql-medecin.alwaysdata.net";
+    $db = "medecin_projet_php";
+    $login = "medecin";
+    $mdp = "\$iutinfo";
 
-Consultations.php a réécrire
+Consultations.php: PHP -> JS
 ~~Fonction.php a répartir dans les API~~
 Form
 Header.html
 Index.html
-Login.php a réécrire
-Medecins.php a réécrire
-Menu.php
-Patient.php a réecrire
-Stat.php a faire
+Login.php: PHP -> JS
+Medecins.php: PHP -> JS
+Menu.php: PHP -> JS
+Patient.php: PHP -> JS
+Stat.php: A faire avec JS
 
 ~~API auth a importer~~
 ~~APIMedecin~~
@@ -16,15 +21,7 @@ Stat.php a faire
 ~~APIConsultation~~
 APIStat
 
-.htaccess à faire
+.htaccess à finir: Stat/Patient, Stat/Medecin
 
-    Note
-    $server = "mysql-medecin.alwaysdata.net";
-    $db = "medecin_projet_php";
-    $login = "medecin";
-    $mdp = "\$iutinfo";
-
-
-Ajout Medecin Fonctionnel
-Modif Medecin Fonctionnel Rajouter les parametre entrée deja affiché
-Supprimer Medecin A faire
+1 fichier PHP par API pour choisir quelle fonction appellé
+Modifier tous le PHP du front par du JS
