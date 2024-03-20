@@ -15,5 +15,6 @@ function connexionBdGen() {
     catch (Exception $e) {
         die('Erreur: ' . $e->getMessage());
     }}
+    return $linkpdo;
 
 ?>

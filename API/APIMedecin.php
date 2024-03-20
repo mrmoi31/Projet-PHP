@@ -17,19 +17,34 @@ if($json_response===false)
 echo $json_response;
 }
 
+function connexionBdGen() {
+
+    $server = "localhost";
+    $db = "projet-apii";
+    $login = "root";
+    $mdp = "";
+
+    //Connection base de donnée
+    try{
+        $linkpdo = new PDO("mysql:host=$server; dbname=$db", $login, $mdp);
+    } 
+    //Verification connection
+    catch (Exception $e) {
+        die('Erreur: ' . $e->getMessage());
+    }
+    return $linkpdo;}
+
 function getAllMedecins()
 {
-    include "connexionBdGen.php";
+    //include "BD/connexionBdGen.php";
     $linkpdo = connexionBdGen();
-    if ($linkpdo === null) {
-        deliver_response("400", "Connexion echouée")
-    }else{
+   
         $stmt = $linkpdo->prepare("SELECT * FROM `medecin`;");
         $stmt->execute();
         $json_response = json_encode($stmt->fetchAll());
         $linkpdo = null;
         return $json_response;
-    }
+    
 }
 
 function ajoutMedecin($civilite, $nom, $prenom){
