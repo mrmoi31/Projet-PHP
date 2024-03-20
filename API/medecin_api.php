@@ -21,19 +21,19 @@ include 'APIMedecin.php';
 
 	        if (!isset($data['civilite']) || !isset($data['nom'] || !isset($data['prenom']))) {
 	            deliver_response(400, "Données manquantes");
-		        }
 		    }else{
 
 		    $civilite = $data['civilite'];
 		    $nom = $data['nom'];
 		    $prenom = $data['prenom'];
 
-		    $res = ajoutMedecin($civilite, $nom, $prenom);
-		    if (!$res) {
-		    	deliver_response("200", "OK", $res);
-		    } else {
-		    	deliver_response("400", "probleme de requete");
+			    $res = ajoutMedecin($civilite, $nom, $prenom);
+			    if (!$res) {
+			    	deliver_response("200", "OK", $res);
+			    } else {
+			    	deliver_response("400", "probleme de requete");
 		    }
+		}
 
  			break;
  		
