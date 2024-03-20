@@ -8,6 +8,11 @@ include 'APIMedecin.php';
  		case 'GET':
 
  			$res = getAllMedecins();
+ 			if (!$res) {
+		    	deliver_response("200", "OK", $res);
+		    } else {
+		    	deliver_response("400", "probleme de requete");
+		    }
  			
  			break;
 
