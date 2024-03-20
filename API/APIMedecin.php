@@ -62,7 +62,7 @@ function supprimerMedecin($id) {
     } else {
         echo "Erreur lors de la suppression du medecin : " . print_r($stmt->errorInfo(), true);
     }
-}
+}}
 
 function modifMedecin(){
 
