@@ -19,13 +19,17 @@ echo $json_response;
 
 function getAllMedecins()
 {
-    include "BD/connexionBdGen.php";
+    include "connexionBdGen.php";
     $linkpdo = connexionBdGen();
-    $stmt = $linkpdo->prepare("SELECT * FROM `medecin`;");
-    $stmt->execute();
-    $json_response = json_encode($stmt->fetchAll());
-    $linkpdo = null;
-    return $json_response;
+    if ($linkpdo === null) {
+        deliver_response("400", "Connexion echouée")
+    }else{
+        $stmt = $linkpdo->prepare("SELECT * FROM `medecin`;");
+        $stmt->execute();
+        $json_response = json_encode($stmt->fetchAll());
+        $linkpdo = null;
+        return $json_response;
+    }
 }
 
 function ajoutMedecin($civilite, $nom, $prenom){
