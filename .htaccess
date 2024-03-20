@@ -5,7 +5,7 @@
 	RewriteCond %{REQUEST_FILENAME} !-d
 
 	RewriteRule ^medecins/?$ /Projet-PHP/API/medecin_api.php [L]
-	RewriteRule ^medecins/([0-9]+)$ /Projet-PHP/API/medecin_apih.php?id=$1 [L]
+	RewriteRule ^medecins/([0-9]+)$ /Projet-PHP/API/medecin_api.php?id=$1 [L]
 	RewriteRule ^usagers/?$ /Projet-PHP/API/APIPatient.php [L]
 	RewriteRule ^usagers/([0-9]+)$ /Projet-PHP/API/APIPatient.php?id=$1 [L]
 	RewriteRule ^consultations/?$ /Projet-PHP/API/APIConsultation.php [L]
