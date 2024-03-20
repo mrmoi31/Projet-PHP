@@ -19,6 +19,7 @@ echo $json_response;
 
 function getAllMedecins()
 {
+    include "BD/connexionBdGen.php";
     $linkpdo = connexionBdGen();
     $stmt = $linkpdo->prepare("SELECT * FROM `medecin`;");
     $stmt->execute();
