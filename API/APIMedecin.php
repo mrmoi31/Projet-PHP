@@ -48,24 +48,36 @@ function getAllMedecins()
 }
 
 function ajoutMedecin($civilite, $nom, $prenom){
- include "connexionBd.php";
- //Recupérer les données
+    //include "connexionBd.php";
+    //Recupérer les données
+    //Vérication de doublon
 
- //Vérication de doublon
- $sql = "SELECT * FROM medecin WHERE civilite = '$civilite' AND nom = '$nom' AND prenom = '$prenom'";
- $result = $linkpdo->query($sql);
+    $linkpdo = connexionBdGen();
+    
+    $sql = "SELECT * FROM medecin WHERE civilite = :civilite AND nom = :nom AND prenom = :prenom";
+    $stmt = $linkpdo->prepare($sql);
+    $stmt->bindParam(':civilite', $civilite);
+    $stmt->bindParam(':nom', $nom);
+    $stmt->bindParam(':prenom', $prenom);
+    $result = $linkpdo->execute($sql);
+    
+    if ($result->rowCount() > 0 ){
+        echo "Ce medecin existe deja dans la BD.\n";
+    }else{
+    
+        $insertSql = "INSERT INTO medecin(civilite, nom, prenom) VALUES(:civilite, :nom, :prenom)";
+        $stmt = $linkpdo->prepare($insertSql);
+        $stmt->bindParam(':civilite', $civilite);
+        $stmt->bindParam(':nom', $nom);
+        $stmt->bindParam(':prenom', $prenom);
 
- if ($result->rowCount() > 0 ){
-     echo "Ce medecin existe deja dans la BD.";
- }else{
-     $insertSql = "INSERT INTO medecin(civilite, nom, prenom) VALUES('$civilite', '$nom', '$prenom')";
-
-     if ($linkpdo->exec($insertSql) !== false){
-         echo "Medecin enregistré";
-     }else{
-         echo "Erreur lors de l'insertion du medecin : " . print_r($linkpdo->errorInfo());
-     }
- }}
+        if ($linkpdo->execute($insertSql) != false){
+            echo "Medecin enregistré\n";
+        }else{
+            echo "Erreur lors de l'insertion du medecin : " . print_r($linkpdo->errorInfo());
+        }
+    }
+}
 
 function supprimerMedecin($id) {
     //include "connexionBd.php";

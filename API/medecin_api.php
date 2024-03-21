@@ -16,8 +16,7 @@ include 'APIMedecin.php';
  			
  			break;
 
-			/*
-			case 'POST':
+		case 'POST':
  			$data = (array) json_decode(file_get_contents('php://input'), TRUE);
 
 	        if (!isset($data['civilite']) || !isset($data['nom'] || !isset($data['prenom']))) {
@@ -35,9 +34,7 @@ include 'APIMedecin.php';
 		    	deliver_response("400", "probleme de requete");
 		    }
 
- 			break;
- 			*/
-			
+ 			break;	
 
  		
 		case 'DELETE' :
