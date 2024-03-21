@@ -48,11 +48,11 @@ include 'APIMedecin.php';
 					deliver_response(400, "Données manquantes");
 				} else {
 
-					int $id = $_GET['id'];
+					$id = $_GET['id'];
 
 					$res = supprimerMedecin($id);
-					if ($res != null) {
-		   		 		deliver_response("200", "OK", $res);
+					if ($res === null) {
+		   		 		deliver_response("200", "OK");
 		   			} else {
 		   		 		deliver_response("400", "probleme de requete");
 		   		 	}

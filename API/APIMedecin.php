@@ -73,7 +73,7 @@ function supprimerMedecin() {
     $linkpdo = connexionBdGen();
 
     $sql = "DELETE FROM medecin WHERE id_medecin = :id_medecin";
-    $sql2 = "DELETE FROM usager WHERE id_medecin = :id_medecin";
+    $sql2 = "DELETE FROM consultation WHERE id_medecin = :id_medecin";
     $stmt = $linkpdo->prepare($sql);
     $stmt2 = $linkpdo->prepare($sql2);
     $stmt->bindParam(':id_medecin', $id, PDO::PARAM_INT);
