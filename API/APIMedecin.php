@@ -41,7 +41,7 @@ function getAllMedecins()
    
         $stmt = $linkpdo->prepare("SELECT * FROM `medecin`;");
         $stmt->execute();
-        $json_response = json_encode($stmt->fetchAll());
+        $json_response = $stmt->fetchAll();
         $linkpdo = null;
         return $json_response;
     
@@ -72,15 +72,15 @@ function supprimerMedecin() {
 
     $linkpdo = connexionBdGen();
 
-    $sql = "DELETE FROM medecin WHERE id_medecin = :id_medecin";
-    $sql2 = "DELETE FROM consultation WHERE id_medecin = :id_medecin";
+    $sql = "DELETE FROM `medecin` WHERE `id_medecin` = :id_medecin";
+    $sql2 = "DELETE FROM `consultation` WHERE `id_medecin` = :id_medecin";
     $stmt = $linkpdo->prepare($sql);
     $stmt2 = $linkpdo->prepare($sql2);
     $stmt->bindParam(':id_medecin', $id, PDO::PARAM_INT);
     $stmt2->bindParam(':id_medecin', $id, PDO::PARAM_INT);
 
     if ($stmt2->execute() && $stmt->execute()) {
-        echo "Medecin supprimé";
+        echo "Medecin supprimé\n";
     } else {
         echo "Erreur lors de la suppression du medecin : " . print_r($stmt->errorInfo(), true);
     }
