@@ -1,8 +1,52 @@
 <?php
 
+function deliver_response($status_code, $status_message, $data=null){
+    /// Paramétrage de l'entête HTTP
+    http_response_code($status_code); //Utilise un message standardisé en fonction du code HTTP
+    //header("HTTP/1.1 $status_code $status_message"); //Permet de
+    //personnaliser le message associé au code HTTP
+    header("Content-Type:application/json; charset=utf-8");//Indique au client le format de la réponse
+    $response['status_code'] = $status_code;
+    $response['status_message'] = $status_message;
+    $response['data'] = $data;
+    /// Mapping de la réponse au format JSON
+    $json_response = json_encode($response);
+    if($json_response===false)
+    die('json encode ERROR : '.json_last_error_msg());
+    /// Affichage de la réponse (Retourné au client)
+    echo $json_response;
+    }
+
+function connexionBdGen() {
+
+        $server = "localhost";
+        $db = "projet-apii";
+        $login = "root";
+        $mdp = "";
+    
+        //Connection base de donnée
+        try{
+            $linkpdo = new PDO("mysql:host=$server; dbname=$db", $login, $mdp);
+        } 
+        //Verification connection
+        catch (Exception $e) {
+            die('Erreur: ' . $e->getMessage());
+        }
+        return $linkpdo;}
+
+function getAllPatient(){
+
+    $linkpdo = connexionBdGen();
+    $stmt = $linkpdo->prepare("SELECT * FROM `usager`;");
+    $stmt->execute();
+    $res = ($stmt->fetchAll());
+    $linkpdo = null;
+    return $res;
+
+}
 function ajoutPatient(){
-include "connexionBd.php";
-//Recupérer les données
+        include "connexionBd.php";
+        //Recupérer les données
         $civilite = isset($_POST["civilite"]) ? $_POST["civilite"] : '';
         $nom = isset($_POST["nom"]) ? $_POST["nom"] : '';
         $prenom = isset($_POST["prenom"]) ? $_POST["prenom"] : '';
@@ -30,21 +74,21 @@ include "connexionBd.php";
                  echo "Erreur lors de l'insertion du patient : " . print_r($linkpdo->errorInfo());
              }
          }}
+function supprimerPatient($id) {
+    //include "connexionBd.php";
 
-function supprimerPatient($id_patient) {
-    include "connexionBd.php";
+    $linkpdo = connexionBdGen();
 
-    $sql = "DELETE FROM patient WHERE id_patient = :id_patient";
+    $sql = "DELETE FROM `usager` WHERE id_usager = :id_usager";
     $stmt = $linkpdo->prepare($sql);
-    $stmt->bindParam(':id_patient', $id_patient, PDO::PARAM_INT);
+    $stmt->bindParam(':id_usager', $id, PDO::PARAM_INT);
 
     if ($stmt->execute()) {
-        echo "Actualisez la page pour finir la suppression";
+        echo "Medecin supprimé\n";
     } else {
-        echo "Erreur lors de la suppression du patient : " . print_r($stmt->errorInfo(), true);
+        echo "Erreur lors de la suppression du medecin : " . print_r($stmt->errorInfo(), true);
     }
-}
-
+    }
 function modifPatient(){
     include "connexionBd.php";
     //Recupérer les données
@@ -75,6 +119,6 @@ function modifPatient(){
         echo "Erreur lors de la modification du patient : " . print_r($linkpdo->errorInfo());
         }
     }
-}
+    }
 
 ?>
