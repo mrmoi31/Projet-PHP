@@ -44,7 +44,7 @@ include 'APIMedecin.php';
 
 				$data = (array) json_decode(file_get_contents('php://input'), TRUE);
 
-				if (!isset($data['id'])) {
+				if (!isset($_GET['id'])) {
 					deliver_response(400, "Données manquantes");
 				} else {
 
