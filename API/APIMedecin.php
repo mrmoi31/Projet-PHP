@@ -41,9 +41,9 @@ function getAllMedecins()
    
         $stmt = $linkpdo->prepare("SELECT * FROM `medecin`;");
         $stmt->execute();
-        $json_response = json_encode($stmt->fetchAll());
+        $res = ($stmt->fetchAll());
         $linkpdo = null;
-        return $json_response;
+        return $res;
     
 }
 
