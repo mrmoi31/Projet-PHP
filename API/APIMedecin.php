@@ -67,13 +67,13 @@ function ajoutMedecin($civilite, $nom, $prenom){
      }
  }}
 
-function supprimerMedecin() {
+function supprimerMedecin($id) {
     //include "connexionBd.php";
 
     $linkpdo = connexionBdGen();
 
-    $sql = "DELETE FROM `medecin` WHERE `id_medecin` = :id_medecin";
-    $sql2 = "DELETE FROM `consultation` WHERE `id_medecin` = :id_medecin";
+    $sql = "DELETE FROM `medecin` WHERE id_medecin = :id_medecin";
+    $sql2 = "DELETE FROM `consultation` WHERE id_medecin = :id_medecin";
     $stmt = $linkpdo->prepare($sql);
     $stmt2 = $linkpdo->prepare($sql2);
     $stmt->bindParam(':id_medecin', $id, PDO::PARAM_INT);
