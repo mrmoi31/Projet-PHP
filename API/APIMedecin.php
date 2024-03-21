@@ -68,9 +68,9 @@ function ajoutMedecin($civilite, $nom, $prenom){
  }}
 
 function supprimerMedecin() {
-    include "connexionBd.php";
+    //include "connexionBd.php";
 
-    $id = isset($_GET['id']) ? $_GET['id'] : '';
+    $linkpdo = connexionBdGen();
 
     $sql = "DELETE FROM medecin WHERE id_medecin = :id_medecin";
     $sql2 = "DELETE FROM usager WHERE id_medecin = :id_medecin";
