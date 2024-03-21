@@ -35,7 +35,8 @@ include 'APIMedecin.php';
 		    	deliver_response("400", "probleme de requete");
 		    }
 
- 			break;*/
+ 			break;
+ 			*/
 			
 
  		
@@ -51,9 +52,9 @@ include 'APIMedecin.php';
 
 					$res = supprimerMedecin($id);
 					if (!$res) {
-		   		 	deliver_response("200", "OK", $res);
+		   		 		deliver_response("200", "OK", $res);
 		   			} else {
-		   		 	deliver_response("400", "probleme de requete");
+		   		 		deliver_response("400", "probleme de requete");
 		   		 	}
 				}
 		
