@@ -12,7 +12,7 @@ include 'APIMedecin.php';
 		    	deliver_response("200", "OK", $res);
 		    } else {
 		    	deliver_response("400", "probleme de requete");
-		    }
+		    }}
  			
  			break;
 
