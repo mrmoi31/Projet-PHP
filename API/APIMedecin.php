@@ -1,21 +1,21 @@
 <?php
 
 function deliver_response($status_code, $status_message, $data=null){
-/// Paramétrage de l'entête HTTP
-http_response_code($status_code); //Utilise un message standardisé en fonction du code HTTP
-//header("HTTP/1.1 $status_code $status_message"); //Permet de
-//personnaliser le message associé au code HTTP
-header("Content-Type:application/json; charset=utf-8");//Indique au client le format de la réponse
-$response['status_code'] = $status_code;
-$response['status_message'] = $status_message;
-$response['data'] = $data;
-/// Mapping de la réponse au format JSON
-$json_response = json_encode($response);
-if($json_response===false)
- die('json encode ERROR : '.json_last_error_msg());
-/// Affichage de la réponse (Retourné au client)
-echo $json_response;
-}
+    /// Paramétrage de l'entête HTTP
+    http_response_code($status_code); //Utilise un message standardisé en fonction du code HTTP
+    //header("HTTP/1.1 $status_code $status_message"); //Permet de
+    //personnaliser le message associé au code HTTP
+    header("Content-Type:application/json; charset=utf-8");//Indique au client le format de la réponse
+    $response['status_code'] = $status_code;
+    $response['status_message'] = $status_message;
+    $response['data'] = $data;
+    /// Mapping de la réponse au format JSON
+    $json_response = json_encode($response);
+    if($json_response===false)
+    die('json encode ERROR : '.json_last_error_msg());
+    /// Affichage de la réponse (Retourné au client)
+    echo $json_response;
+    }
 
 function connexionBdGen() {
 
@@ -35,7 +35,7 @@ function connexionBdGen() {
     return $linkpdo;}
 
 function getAllMedecins()
-{
+    {
     //include "BD/connexionBdGen.php";
     $linkpdo = connexionBdGen();
    
@@ -45,13 +45,13 @@ function getAllMedecins()
         $linkpdo = null;
         return $res;
     
-}
+    }
 
 function ajoutMedecin($civilite, $nom, $prenom){
     //include "connexionBd.php";
-    //Recupérer les données
-    //Vérication de doublon
-
+ //Recupérer les données
+ //Vérication de doublon
+ 
     $linkpdo = connexionBdGen();
     
     $sql = "SELECT * FROM medecin WHERE civilite = :civilite AND nom = :nom AND prenom = :prenom";
@@ -59,24 +59,24 @@ function ajoutMedecin($civilite, $nom, $prenom){
     $stmt->bindParam(':civilite', $civilite);
     $stmt->bindParam(':nom', $nom);
     $stmt->bindParam(':prenom', $prenom);
-    $result = $linkpdo->execute($sql);
-    
-    if ($result->rowCount() > 0 ){
-        echo "Ce medecin existe deja dans la BD.\n";
-    }else{
-    
+ $result = $linkpdo->execute($sql);
+
+ if ($result->rowCount() > 0 ){
+    echo "Ce medecin existe deja dans la BD.\n";
+ }else{
+     
         $insertSql = "INSERT INTO medecin(civilite, nom, prenom) VALUES(:civilite, :nom, :prenom)";
         $stmt = $linkpdo->prepare($insertSql);
         $stmt->bindParam(':civilite', $civilite);
         $stmt->bindParam(':nom', $nom);
         $stmt->bindParam(':prenom', $prenom);
 
-        if ($linkpdo->execute($insertSql) != false){
-            echo "Medecin enregistré\n";
-        }else{
-            echo "Erreur lors de l'insertion du medecin : " . print_r($linkpdo->errorInfo());
-        }
-    }
+     if ($linkpdo->execute($insertSql) != false){
+         echo "Medecin enregistré\n";
+     }else{
+         echo "Erreur lors de l'insertion du medecin : " . print_r($linkpdo->errorInfo());
+     }
+ }
 }
 
 function supprimerMedecin($id) {
@@ -96,7 +96,7 @@ function supprimerMedecin($id) {
     } else {
         echo "Erreur lors de la suppression du medecin : " . print_r($stmt->errorInfo(), true);
     }
-}
+    }
 
 function modifMedecin(){
 
@@ -122,6 +122,6 @@ function modifMedecin(){
         }
     } 
 
-}
+    }
 
 ?>
