@@ -24,7 +24,7 @@ function addMedecin(){
     var medecin = document.getElementById('newMedecin').value;
 
     const requestOptions = {
-        methiod: 'POST',
+        method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
@@ -43,9 +43,37 @@ function addMedecin(){
 .catch(error => console.error('Erreur : ', error));
 }
 
-function updateMedecin(){}
+function updateMedecin(){
 
-function deleteMedecin(){}
+    var medecinId = document.getElementById('idMedecin').value;
+    var mdecinNom = document.getElementById('nomMedecin').value;
+    var medecinPrenom = document.getElementById('prenomMedecin').value;
+    var medecinCivilite = document.getElementById('civiliteMedecin').value;
+
+    if 
+}
+
+function deleteMedecin(){
+
+    var medecinId = document.getElementById('deleteIdMedecin').value;
+
+    const requestOptions = {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+        }}
+    fetch(`²{baseUrl}${ressource}/${medecinId}`, requestOptions)
+    .then(response => response.json())
+    .then(data => {let infoReponse = {
+        status : data.status,
+        status_code : data.status_code,
+        status_message : data.status_message
+    };
+    displayInfoReponse(document.getElementById('infoDeleteMedecin'), infoReponse); 
+})
+.catch(error => console.error('Erreur : ', error));
+    
+}
 
 function displayData(medecin){}
 
