@@ -2,45 +2,53 @@
 
 include 'jwt_utils.php';
 
-include 'connexionBd.php';
 
-$http_method = $_SERVER['REQUEST_METHOD'];
-    if($http_method == "POST") {
-        //get posted data
-        $data = (array) json_decode(file_get_contents('php://input'), TRUE);
+function connexionBdAuth() {
 
-        //if the users exist, create a JWT
-        if (!isset($data['username']) || !isset($data['password'])) {
-            deliver_response(400, "Votre Login ou mot de passe est incorrect");
+    $server = "localhost";
+    $db = "projet-api-bd";
+    $login = "root";
+    $mdp = "";
+
+    //Connection base de donnée
+    try{
+        $linkpdo = new PDO("mysql:host=$server; dbname=$db", $login, $mdp);
+    } 
+    //Verification connection
+    catch (Exception $e) {
+        die('Erreur: ' . $e->getMessage());
+
+        return $linkpdo;
+    }}
+
+function demandeJeton($username, $password){
+
+    $linkdpo = connexionBdAuth();
+    //if the users exist, create a JWT
+        $query = "SELECT * FROM user_auth_v1 WHERE login = :username";
+        $stmt = $linkdpo->prepare($query); 
+        $stmt->bindParam(':username', $username);
+        $stmt->execute();
+        $result = $stmt->fetch();
+        if ($username == $result['login'] && password_verify($password, $result['mdp'])) {
+            $headers = array(
+                "alg" => "HS256",
+                "typ" => "JWT"
+            );
+
+            $payload = array(
+                "username" => $username,
+                "role" => $result['role'],
+                "exp" => (time() + 60));
+
+            $secret = "g9V6bB8k";
+
+            $jwt = generate_jwt($headers, $payload, $secret);
+            deliver_response(200, "OK", $jwt);
         } else {
-            $username = $data['username'];
-            $password = $data['password'];
-            $query = "SELECT * FROM user WHERE username = :username";
-            $stmt = $linkdpo->prepare($query);
-            $stmt->bindParam(':username', $username);
-            $stmt->execute();
-            $result = $stmt->fetch();
-            if ($username == $result['username'] && password_verify($password, $result['password'])) {
-                $headers = array(
-                    "alg" => "HS256",
-                    "typ" => "JWT"
-                );
-
-                $payload = array(
-                    "username" => $username,
-                    "role" => $result['role'],
-                    "exp" => (time() + 60));
-
-                $secret = "g9V6bB8k";
-
-                $jwt = generate_jwt($headers, $payload, $secret);
-                deliver_response(200, "OK", $jwt);
-            } else {
-                deliver_response(401, "Votre Login ou mot de passe est incorrect");
-            }
-        }else {
-            deliver_response(405, "Bad Method");
-        }
+            deliver_response(401, "Votre Login ou mot de passe est incorrect");
+    }
+}
 
     function deliver_response($status_code, $status_message, $data=null){
         // var_dump($data);
@@ -63,6 +71,6 @@ $http_method = $_SERVER['REQUEST_METHOD'];
        
     }
 
-}
+
 
 $linkdpo = null;
