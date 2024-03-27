@@ -4,6 +4,9 @@
 	RewriteCond %{REQUEST_FILENAME} !-f
 	RewriteCond %{REQUEST_FILENAME} !-d
 
+	#Auth
+	RewriteRule ^auth$ /Projet-PHP/APIAuth/auth_api.php.php
+
 	RewriteRule ^medecins/?$ /Projet-PHP/API/medecin_api.php [L]
 	RewriteRule ^medecins/([0-9]+)$ /Projet-PHP/API/medecin_api.php?id=$1 [L]
 	RewriteRule ^usagers/?$ /Projet-PHP/API/patient_api.php [L]
