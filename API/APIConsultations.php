@@ -1,12 +1,8 @@
 <?php  
 
-function ajoutConsultation(){
+function ajoutConsultation($id_medecin, $id_patient, $dateRDV, $heureRDV){
     include "connexionBd.php";
     //Recupérer les données
-   $id_medecin = isset($_POST["id_medecin"]) ? $_POST["id_medecin"] : '';
-   $dateRDV = isset($_POST["dateRDV"]) ? $_POST["dateRDV"] : '';
-   $heureRDV = isset($_POST["heureRDV"]) ? $_POST["heureRDV"] : '';
-   $id_patient = isset($_POST["id_patient"]) ? $_POST["id_patient"] : '';
    //Vérication de doublon
    $sql = "SELECT * FROM consultation WHERE id_medecin = '$id_medecin' AND dateRDV = '$dateRDV' AND heureRDV = '$heureRDV' AND id_patient = '$id_patient'; ";
    $result = $linkpdo->query($sql);

@@ -68,6 +68,10 @@ include 'APIMedecin.php';
 				putUnePhrase();
 		
 			break;
+			
+		default :
+				deliver_response(405, "Bad Method");
+			break;
  	}
 
 ?>
