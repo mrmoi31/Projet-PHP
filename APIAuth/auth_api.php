@@ -5,16 +5,11 @@ include 'APIAuth.php';
  $http_method = $_SERVER['REQUEST_METHOD'];
 
  	switch ($http_method) {
- 		case 'GET':
+ 		// case 'GET':
 
- 			$res = getAllMedec();
- 			if ($res != null) {
-		    	deliver_response("200", "OK", $res);
-		    } else {
-		    	deliver_response("400", "probleme de requete");
-		    }
  			
- 			break;
+ 			
+ 		// 	break;
 
 		case 'POST':
  			$data = (array) json_decode(file_get_contents('php://input'), TRUE);
