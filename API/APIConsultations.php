@@ -78,7 +78,7 @@ function supprimerConsultation($id_consult) {
 
 function modifConsultation(){
 
-    include "connexionBd.php";
+    $linkpdo = connexionBdGen::getInstance();
     //Recupérer les données
     $id_medecin = isset($_POST["id_medecin"]) ? $_POST["id_medecin"] : '';
     $date = isset($_POST["date"]) ? $_POST["date"] : '';

@@ -1,5 +1,7 @@
 <?php
 
+require 'ConnexionBdGen.php';
+
 function deliver_response($status_code, $status_message, $data=null){
     /// Paramétrage de l'entête HTTP
     http_response_code($status_code); //Utilise un message standardisé en fonction du code HTTP
@@ -17,26 +19,11 @@ function deliver_response($status_code, $status_message, $data=null){
     echo $json_response;
     }
 
-function connexionBdGen() {
 
-        $server = "localhost";
-        $db = "api_cabinet";
-        $login = "root";
-        $mdp = "omgloltrol";
-    
-        //Connection base de donnée
-        try{
-            $linkpdo = new PDO("mysql:host=$server; dbname=$db", $login, $mdp);
-        } 
-        //Verification connection
-        catch (Exception $e) {
-            die('Erreur: ' . $e->getMessage());
-        }
-        return $linkpdo;}
 
 function getAllPatient(){
 
-    $linkpdo = connexionBdGen();
+    $linkpdo = connexionBdGen::getInstance();
     $stmt = $linkpdo->prepare("SELECT * FROM `usager`;");
     $stmt->execute();
     $res = ($stmt->fetchAll());
@@ -47,7 +34,7 @@ function getAllPatient(){
 
 function getPatientById($id)
 {
-    $linkpdo = connexionBdGen();
+    $linkpdo = connexionBdGen::getInstance();
 
     $stmt = $linkpdo->prepare("SELECT * FROM `usager` where id_usager = :id;");
     $stmt->bindParam(':id', $id);
@@ -58,9 +45,7 @@ function getPatientById($id)
 }
 
 function ajoutPatient($civilite, $nom, $prenom, $sexe, $adresse, $ville, $codePostal, $dateN, $lieuN, $numSecu, $id_medecin){
-        //include "connexionBd.php";
-     
-        $linkpdo = connexionBdGen();
+    $linkpdo = connexionBdGen::getInstance();
         
         $stmt = $linkpdo->prepare("SELECT * FROM usager WHERE civilite = :civilite AND nom = :nom AND prenom = :prenom and sexe = :sexe AND adresse = :adresse AND code_postal = :codePostal AND ville = :ville AND date_nais = :dateNaissance AND lieu_nais = :lieuxNaissance AND num_secu = :numSecu and id_medecin = :id_medecin" );
         $stmt->bindParam(':civilite', $civilite, PDO::PARAM_STR);
@@ -114,9 +99,7 @@ function ajoutPatient($civilite, $nom, $prenom, $sexe, $adresse, $ville, $codePo
 }
 
 function supprimerPatient($id) {
-    //include "connexionBd.php";
-
-    $linkpdo = connexionBdGen();
+    $linkpdo = connexionBdGen::getInstance();
 
     $sql = "DELETE FROM `usager` WHERE id_usager = :id_usager";
     $stmt = $linkpdo->prepare($sql);
@@ -129,7 +112,7 @@ function supprimerPatient($id) {
     }
     }
 function modifPatient(){
-    include "connexionBd.php";
+    $linkpdo = connexionBdGen::getInstance();
     //Recupérer les données
     $civilite = isset($_POST["civilite"]) ? $_POST["civilite"] : '';
     $nom = isset($_POST["nom"]) ? $_POST["nom"] : '';

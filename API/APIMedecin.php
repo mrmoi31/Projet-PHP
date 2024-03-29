@@ -1,5 +1,7 @@
 <?php
 
+require 'ConnexionBdGen.php';
+
 function deliver_response($status_code, $status_message, $data=null){
     /// Paramétrage de l'entête HTTP
     http_response_code($status_code); //Utilise un message standardisé en fonction du code HTTP
@@ -17,28 +19,11 @@ function deliver_response($status_code, $status_message, $data=null){
     echo $json_response;
     }
 
-function connexionBdGen() {
 
-    $server = "localhost";
-    $db = "api_cabinet";
-    $login = "root";
-    $mdp = "";
-
-    //Connection base de donnée
-    try{
-        $linkpdo = new PDO("mysql:host=$server; dbname=$db", $login, $mdp);
-    } 
-    //Verification connection
-    catch (Exception $e) {
-        die('Erreur: ' . $e->getMessage());
-    }
-    return $linkpdo;
-}
 
 function getAllMedecins()
     {
-    //include "BD/connexionBdGen.php";
-    $linkpdo = connexionBdGen();
+        $linkpdo = connexionBdGen::getInstance();
    
         $stmt = $linkpdo->prepare("SELECT * FROM `medecin`;");
         $stmt->execute();
@@ -50,7 +35,7 @@ function getAllMedecins()
 
 function getMedecinById($id)
 {
-    $linkpdo = connexionBdGen();
+    $linkpdo = connexionBdGen::getInstance();
 
     $stmt = $linkpdo->prepare("SELECT * FROM `medecin` where id_medecin = :id;");
     $stmt->bindParam(':id', $id);
@@ -61,9 +46,7 @@ function getMedecinById($id)
 }
 
 function ajoutMedecin($civilite, $nom, $prenom){
-        //include "connexionBd.php";
-     
-        $linkpdo = connexionBdGen();
+    $linkpdo = connexionBdGen::getInstance();
         
         $stmt = $linkpdo->prepare("SELECT * FROM `medecin` WHERE civilite = :civilite AND nom = :nom AND prenom =   :prenom");
         $stmt->bindParam(':civilite', $civilite);
@@ -95,9 +78,7 @@ function ajoutMedecin($civilite, $nom, $prenom){
 }
 
 function supprimerMedecin($id) {
-    //include "connexionBd.php";
-
-    $linkpdo = connexionBdGen();
+    $linkpdo = connexionBdGen::getInstance();
 
     $sql = "DELETE FROM `medecin` WHERE id_medecin = :id_medecin";
     $sql2 = "DELETE FROM `consultation` WHERE id_medecin = :id_medecin";
@@ -115,7 +96,7 @@ function supprimerMedecin($id) {
 
 function modifMedecin(){
 
-    include "connexionBd.php";
+    $linkpdo = connexionBdGen::getInstance();
     //Recupérer les données
     $civilite = isset($_POST["civilite"]) ? $_POST["civilite"] : '';
        $nom = isset($_POST["nom"]) ? $_POST["nom"] : '';
