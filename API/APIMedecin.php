@@ -69,6 +69,7 @@ function ajoutMedecin($civilite, $nom, $prenom){
         $stmt->bindParam(':civilite', $civilite);
         $stmt->bindParam(':nom', $nom);
         $stmt->bindParam(':prenom', $prenom);
+        
         $res = $stmt->execute();
     
     if ($res == true ) {
