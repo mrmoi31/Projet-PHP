@@ -22,7 +22,7 @@ function connexionBdGen() {
     $server = "localhost";
     $db = "api_cabinet";
     $login = "root";
-    $mdp = "omgloltrol";
+    $mdp = "";
 
     //Connection base de donnée
     try{
