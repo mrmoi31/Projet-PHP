@@ -71,6 +71,6 @@ include 'APIConsultations.php';
 
 		default : 
 			deliver_response(405, "Bad Method");
- 	}
-
+	}}
+	
 ?>
