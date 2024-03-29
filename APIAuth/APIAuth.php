@@ -1,52 +1,58 @@
 <?php
 
 include 'jwt_utils.php';
+require 'ConnexionBdAuth.php';
 
 
-function connexionBdAuth() {
+// function connexionBdAuth() {
 
-    $server = "localhost";
-    $db = "projet-api-bd";
-    $login = "root";
-    $mdp = "";
+//     $server = "localhost";
+//     $db = "projet-api-bd";
+//     $login = "root";
+//     $mdp = "";
 
-    //Connection base de donnée
-    try{
-        $linkpdo = new PDO("mysql:host=$server; dbname=$db", $login, $mdp);
-    } 
-    //Verification connection
-    catch (Exception $e) {
-        die('Erreur: ' . $e->getMessage());
+//     //Connection base de donnée
+//     try{'
+//         $linkpdo = new PDO("mysql:host=$server; dbname=$db", $login, $mdp);
+//     } 
+//     //Verification connection
+//     catch (Exception $e) {
+//         die('Erreur: ' . $e->getMessage());
 
-        return $linkpdo;
-    }}
+//         return $linkpdo;
+//     }}
 
 function demandeJeton($username, $password){
 
-    $linkdpo = connexionBdAuth();
+
+    $linkpdo = connexionBdAuth::getInstance();
     //if the users exist, create a JWT
-        $query = "SELECT * FROM user_auth_v1 WHERE login = :username";
-        $stmt = $linkdpo->prepare($query); 
+        $query = "SELECT * FROM `user_auth_v1` WHERE `login` = :username";
+        $stmt = $linkpdo->prepare($query); 
         $stmt->bindParam(':username', $username);
         $stmt->execute();
         $result = $stmt->fetch();
-        if ($username == $result['login'] && password_verify($password, $result['mdp'])) {
-            $headers = array(
+        if ($result == true) {
+            if ($username == $result['login'] && password_verify($password, $result['mdp'])) {
+                $headers = array(
                 "alg" => "HS256",
                 "typ" => "JWT"
-            );
+                );
 
-            $payload = array(
+                $payload = array(
                 "username" => $username,
                 "role" => $result['role'],
                 "exp" => (time() + 60));
 
-            $secret = "g9V6bB8k";
+                $secret = "g9V6bB8k";
 
-            $jwt = generate_jwt($headers, $payload, $secret);
-            deliver_response(200, "OK", $jwt);
+                $jwt = generate_jwt($headers, $payload, $secret);
+                deliver_response(200, "OK", $jwt);
         } else {
             deliver_response(401, "Votre Login ou mot de passe est incorrect");
+    }
+    } else {
+        deliver_response(401, "Votre Login ou mot de passe est incorrect");
     }
 }
 
@@ -73,4 +79,4 @@ function demandeJeton($username, $password){
 
 
 
-$linkdpo = null;
+$linkpdo = null;
