@@ -20,9 +20,9 @@ function deliver_response($status_code, $status_message, $data=null){
 function connexionBdGen() {
 
         $server = "localhost";
-        $db = "projet-apii";
+        $db = "api_cabinet";
         $login = "root";
-        $mdp = "";
+        $mdp = "omgloltrol";
     
         //Connection base de donnée
         try{
@@ -57,55 +57,55 @@ function getPatientById($id)
     return $res;
 }
 
-function ajoutPatient(){
-        //include "connexionBd.php";
-        //Recupérer les données
-        
-        $linkpdo = connexionBdGen();
-
-         //Vérication de doublon
-         $sql = "SELECT * FROM patient WHERE civilite = '$civilite' AND nom = '$nom' AND prenom = '$prenom' AND adresse = '$adresse' AND codePostal = '$code_postal' AND ville = '$ville' AND dateNaissance = '$dateN' AND lieuNaissance = '$lieuxN' AND numSecu = '$numSecu' ";
-         $result = $linkpdo->query($sql);
- 
-         if ($result->rowCount() > 0 ){
-             echo "Ce patient existe deja dans la BD.";
-         }else{
-             $insertSql = "INSERT INTO patient(civilite, nom, prenom, adresse, codePostal, ville, dateNaissance, lieuNaissance, numSecu, id_medecin) VALUES('$civilite', '$nom', '$prenom', '$adresse', '$code_postal', '$ville', '$dateN', '$lieuxN', '$numSecu', '$id_medecin')";
- 
-             if ($linkpdo->exec($insertSql) !== false){
-                 echo "Patient enregistré";
-             }else{
-                 echo "Erreur lors de l'insertion du patient : " . print_r($linkpdo->errorInfo());
-             }
-         }
-     }
-
-     function ajoutMedecin($civilite, $nom, $prenom, $adresse, $ville, $codePostal, $dateN, $lieuN, $numSecu, $id_medecin){
+function ajoutPatient($civilite, $nom, $prenom, $sexe, $adresse, $ville, $codePostal, $dateN, $lieuN, $numSecu, $id_medecin){
         //include "connexionBd.php";
      
         $linkpdo = connexionBdGen();
         
-        $stmt = $linkpdo->prepare("SELECT * FROM `medecin` WHERE civilite = :civilite AND nom = :nom AND prenom =   :prenom");
-        $stmt->bindParam(':civilite', $civilite);
-        $stmt->bindParam(':nom', $nom);
-        $stmt->bindParam(':prenom', $prenom);
-        $res = $stmt->execute();
+        $stmt = $linkpdo->prepare("SELECT * FROM usager WHERE civilite = :civilite AND nom = :nom AND prenom = :prenom and sexe = :sexe AND adresse = :adresse AND code_postal = :codePostal AND ville = :ville AND date_nais = :dateNaissance AND lieu_nais = :lieuxNaissance AND num_secu = :numSecu and id_medecin = :id_medecin" );
+        $stmt->bindParam(':civilite', $civilite, PDO::PARAM_STR);
+        $stmt->bindParam(':nom', $nom, PDO::PARAM_STR);
+        $stmt->bindParam(':prenom', $prenom, PDO::PARAM_STR);
+        $stmt->bindParam(':sexe', $sexe, PDO::PARAM_STR);
+        $stmt->bindParam(':adresse', $adresse, PDO::PARAM_STR);
+        $stmt->bindParam(':codePostal', $codePostal, PDO::PARAM_STR);
+        $stmt->bindParam(':ville', $ville, PDO::PARAM_STR);
+        $stmt->bindParam(':dateNaissance', $dateN, PDO::PARAM_STR);
+        $stmt->bindParam(':lieuNaissance', $lieuxN, PDO::PARAM_STR);
+        $stmt->bindParam(':numSecu', $numSecu, PDO::PARAM_STR);
+        $stmt->bindParam(':id_medecin', $id_medecin, PDO::PARAM_STR);
+
+        try {
+            $res = $stmt->execute();
+            
+        } catch (Exception $e) {
+            echo $e->getMessage();
+        }
+        
     
     if ($res == true ) {
         if ($stmt->rowCount() > 0 ){
-           echo "Ce medecin existe deja dans la BD.\n";
+           echo "Ce patient existe deja dans la BD.\n";
         }else{
             
-               $stmt = "INSERT INTO medecin(civilite, nom, prenom) VALUES(:civilite, :nom, :prenom)";
-               $stmt = $linkpdo->prepare($stmt);
-               $stmt->bindParam(':civilite', $civilite);
-               $stmt->bindParam(':nom', $nom);
-               $stmt->bindParam(':prenom', $prenom);
+            $stmtInsert = "INSERT INTO usager(civilite, nom, prenom, sexe, adresse, codePostal, ville, dateNaissance, lieuxNaissance, numSecu, id_medecin) VALUES (:civilite, :nom, :prenom, :sexe, :adresse, :codePostal, :ville, :dateNaissance, :lieuxNaissance, :numSecu, :id_medecin)";
+            $stmtInsert = $linkpdo->prepare($stmt);
+            $stmtInsert->bindParam(':civilite', $civilite);
+            $stmtInsert->bindParam(':nom', $nom);
+            $stmtInsert->bindParam(':prenom', $prenom);
+            $stmtInsert->bindParam(':sexe', $sexe);
+            $stmtInsert->bindParam(':adresse', $adresse);
+            $stmtInsert->bindParam(':codePostal', $codePostal);
+            $stmtInsert->bindParam(':ville', $ville);
+            $stmtInsert->bindParam(':dateNaissance', $dateN);
+            $stmtInsert->bindParam(':lieuNaissance', $lieuxN);
+            $stmtInsert->bindParam(':numSecu', $numSecu);
+            $stmtInsert->bindParam(':id_medecin', $id_medecin);
 
-            if ($stmt->execute() != false){
-                echo "Medecin enregistré\n";
+            if ($stmtInsert->execute() == true){
+                echo "Usager enregistré\n";
             }else{
-                echo "Erreur lors de l'insertion du medecin : " . print_r($linkpdo->errorInfo());
+                echo "Erreur lors de l'insertion de l'usager : " . print_r($linkpdo->errorInfo());
             }
         }
     }else{

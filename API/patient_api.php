@@ -20,28 +20,31 @@ include 'APIPatient.php';
 		case 'POST':
  			$data = (array) json_decode(file_get_contents('php://input'), TRUE);
 
-	        if (!isset($data['civilite']) || !isset($data['nom'] || !isset($data['prenom']))) {
+	        if (!isset($data['civilite']) || !isset($data['nom']) || !isset($data['prenom']) || !isset($data['sexe']) || !isset($data['adresse']) || !isset($data['ville']) || !isset($data['code_postal']) || !isset($data['date_nais']) || !isset($data['lieu_nais']) || !isset($data['num_secu']) || !isset($data['id_medecin']) ) 
+	        {
 	            deliver_response(400, "Données manquantes");
 		    }else{
 
-	        $civilite = isset($_POST["civilite"]) ? $_POST["civilite"] : '';
-	        $nom = isset($_POST["nom"]) ? $_POST["nom"] : '';
-	        $prenom = isset($_POST["prenom"]) ? $_POST["prenom"] : '';
-	        $adresse = isset($_POST["adresse"]) ? $_POST["adresse"] : '';
-	        $ville = isset($_POST["ville"]) ? $_POST["ville"] : '';
-	        $code_postal = isset($_POST["codePostal"]) ? $_POST["codePostal"] : '';
-	        $dateN = isset($_POST["dateNaissance"]) ? $_POST["dateNaissance"] : '';
-	        $lieuxN = isset($_POST["lieuNaissance"]) ? $_POST["lieuNaissance"] : '';
-	        $numSecu = isset($_POST["numSecu"]) ? $_POST["numSecu"] : '';
-	        $id_medecin = isset($_POST["id_medecin"]) ? $_POST["id_medecin"] : '';
+	        $civilite = $_POST["civilite"];
+	        $nom = $_POST["nom"];
+	        $prenom = $_POST["prenom"];
+	        $sexe = $_POST["sexe"];
+	        $adresse = $_POST["adresse"];
+	        $ville = $_POST["ville"];
+	        $code_postal = $_POST["code_postal"];
+	        $dateN = $_POST["date_nais"];
+	        $lieuxN = $_POST["lieu_nais"];
+	        $numSecu = $_POST["num_secu"];
+	        $id_medecin = $_POST["id_medecin"];
 
 
-		    $res = ajoutPatient($civilite, $nom, $prenom, $adresse, $ville, $codePostal, $dateN, $lieuxN, $numSecu, $id_medecin);
-		    if (!$res) {
+		    $res = ajoutPatient($civilite, $nom, $prenom, $sexe, $adresse, $ville, $code_postal, $dateN, $lieuxN, $numSecu, $id_medecin);
+		    if ($res != null) {
 		    	deliver_response("200", "OK", $res);
 		    } else {
 		    	deliver_response("400", "probleme de requete");
 		    }
+		}
 
  		break;		
 
