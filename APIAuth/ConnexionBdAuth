@@ -23,8 +23,8 @@ class connexionBdAuth{
     //Constructeur
     private function __construct(){
         try{
-            $base_url = "server=%s; db=%s";
-            $url = sprintf($base_url, "localhost", "projet-api-bd");
+            $base_url = "mysql:host=%s;dbname=%s";
+            $url = sprintf($base_url, "localhost", "api_auth");
             $this->_pdo = new PDO($url, "root", "");
         }catch (PDOException $e){
             die('Erreur: ' . $e->getMessage());
