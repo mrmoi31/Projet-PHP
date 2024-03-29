@@ -24,7 +24,5 @@
 	# stats
 	RewriteRule ^stats/medecins API/stats_api.php?cible=med [L]
 	RewriteRule ^stats/patients API/stats_api.php?cible=usa [L]
-
-	RewriteRule . API/medecin_api.php [L]
 	
 </IfModule>
