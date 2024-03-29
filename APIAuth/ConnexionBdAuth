@@ -1,0 +1,49 @@
+<?php
+// function connexionBdAuth() {
+//     $server = "localhost";
+//     $db = "projet-api-bd";
+//     $login = "root";
+//     $mdp = "";
+
+//     //Connection base de donnée
+//     try{
+//         $linkpdo = new PDO("mysql:host=$server; dbname=$db", $login, $mdp);
+//     } 
+//     //Verification connection
+//     catch (Exception $e) {
+//         die('Erreur: ' . $e->getMessage());
+//     }}
+
+//     return $linkpdo;
+
+class connexionBdAuth{
+    public static connexionBdAuth | null $_instance = null;
+    private PDO $_pdo;
+
+    //Constructeur
+    private function __construct(){
+        try{
+            $base_url = "server=%s; db=%s";
+            $url = sprintf($base_url, "localhost", "projet-api-bd");
+            $this->_pdo = new PDO($url, "root", "");
+        }catch (PDOException $e){
+            die('Erreur: ' . $e->getMessage());
+
+        }
+    }
+
+    //Getters
+    public function getPDO(): PDO{
+        return $this->_pdo;
+    }
+
+    //Singleton
+    public static function getInstance (): ?PDO{
+        if (is_null(self::$_instance)){
+            self::$_instance = new connexionBdAuth();
+        }
+        return self::$_instance->getPDO();
+    }
+}
+?>
+
