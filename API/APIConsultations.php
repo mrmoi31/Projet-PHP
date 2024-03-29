@@ -19,6 +19,30 @@ function deliver_response($status_code, $status_message, $data=null){
     echo $json_response;
     }
 
+function getAllMedecins()
+    {
+    //include "BD/connexionBdGen.php";
+    $linkpdo = connexionBdGen::getInstance();
+        $stmt = $linkpdo->prepare("SELECT * FROM `consultation`;");
+        $stmt->execute();
+        $res = ($stmt->fetchAll(PDO::FETCH_ASSOC));
+        $linkpdo = null;
+        return $res;
+    
+    }
+
+function getMedecinById($id)
+    {
+        $linkpdo = connexionBdGen::getInstance();
+    
+        $stmt = $linkpdo->prepare("SELECT * FROM `consultation` where id_consultation = :id;");
+        $stmt->bindParam(':id', $id);
+        $stmt->execute();
+        $res = ($stmt->fetchAll(PDO::FETCH_ASSOC));
+        $linkpdo = null;
+        return $res;
+    }
+
 function ajoutConsultation($id_medecin, $id_patient, $dateRDV, $heureRDV, $dureeCons){
     $linkpdo = connexionBdGen::getInstance();
     //Recupérer les données
@@ -39,11 +63,11 @@ function ajoutConsultation($id_medecin, $id_patient, $dateRDV, $heureRDV, $duree
 }
 
 function supprimerConsultation($id_consult) {
-    include "connexionBd.php";
+    $linkpdo = connexionBdGen::getInstance();
 
-    $sql = "DELETE FROM consultation WHERE id_consultation = :id_consultation";
+    $sql = "DELETE FROM consultation WHERE id_consult = :id_consult";
     $stmt = $linkpdo->prepare($sql);
-    $stmt->bindParam(':id_consultation', $id_consult, PDO::PARAM_INT);
+    $stmt->bindParam(':id_consult', $id_consult, PDO::PARAM_INT);
 
     if ($stmt->execute()) {
         echo "Actualisez la page pour finir la suppression";

@@ -49,7 +49,7 @@ include 'APIConsultations.php';
 
 					$id = $_GET['id'];
 
-					$res = supprimerMedecin($id);
+					$res = supprimerConsultation($id);
 					if ($res === null) {
 		   		 		deliver_response("200", "OK");
 		   			} else {
