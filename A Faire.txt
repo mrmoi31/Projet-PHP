@@ -4,25 +4,12 @@
     $login = "medecin";
     $mdp = "\$iutinfo";
 
-Consultations.php: PHP -> JS
-~~Fonction.php a répartir dans les API~~
-Form
-Header.html
-Index.html
+Refaire ReedMe
 
-Login.php: PHP -> JS
-Medecins.php: PHP -> JS
-Menu.php: PHP -> JS
-Patient.php: PHP -> JS
-Stat.php: A faire avec JS
+Faire DOC           Theo
 
-~~API auth a importer~~
-~~APIMedecin~~
-~~APIUsagers~~
-~~APIConsultation~~
-APIStat
+Faire Update        Dorian
 
-.htaccess à finir: Stat/Patient, Stat/Medecin
+Faire débug API     Theo
 
-1 fichier PHP par API pour choisir quelle fonction appellé
-Modifier tous le PHP du front par du JS
+Gerer code d'erreur Dorian
