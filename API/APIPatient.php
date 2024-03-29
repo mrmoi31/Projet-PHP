@@ -26,7 +26,7 @@ function getAllPatient(){
     $linkpdo = connexionBdGen::getInstance();
     $stmt = $linkpdo->prepare("SELECT * FROM `usager`;");
     $stmt->execute();
-    $res = ($stmt->fetchAll());
+    $res = ($stmt->fetchAll(PDO::FETCH_ASSOC));
     $linkpdo = null;
     return $res;
 
