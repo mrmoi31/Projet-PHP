@@ -4,7 +4,7 @@
     $login = "medecin";
     $mdp = "\$iutinfo";
 
-Refaire ReedMe
+Refaire ReadMe
 
 Faire DOC           Theo
 
