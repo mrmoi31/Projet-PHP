@@ -7,12 +7,21 @@ include 'APIConsultations.php';
  	switch ($http_method) {
  		case 'GET':
 
- 			$res = getAllMedecins();
- 			if ($res != null) {
-		    	deliver_response("200", "OK", $res);
-		    } else {
-		    	deliver_response("400", "probleme de requete");
-		    }
+			if (!isset($_GET['id'])) {
+				$res = getAllConsult();
+				if ($res != null) {
+					deliver_response("200", "OK", $res);
+				} else {
+					deliver_response("400", "probleme de requete");
+				}
+			}else{
+				$res = getConsultById($_GET['id']);
+				if ($res != null) {
+					deliver_response("200", "OK", $res);
+				} else {
+					deliver_response("400", "probleme de requete");
+				}
+			}	
  			
  			break;
 

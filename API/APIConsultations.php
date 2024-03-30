@@ -19,7 +19,7 @@ function deliver_response($status_code, $status_message, $data=null){
     echo $json_response;
     }
 
-function getAllMedecins()
+function getAllConsult()
     {
     //include "BD/connexionBdGen.php";
     $linkpdo = connexionBdGen::getInstance();
@@ -31,11 +31,11 @@ function getAllMedecins()
     
     }
 
-function getMedecinById($id)
+function getConsultById($id)
     {
         $linkpdo = connexionBdGen::getInstance();
     
-        $stmt = $linkpdo->prepare("SELECT * FROM `consultation` where id_consultation = :id;");
+        $stmt = $linkpdo->prepare("SELECT * FROM `consultation` where id_consult = :id;");
         $stmt->bindParam(':id', $id);
         $stmt->execute();
         $res = ($stmt->fetchAll(PDO::FETCH_ASSOC));
