@@ -94,10 +94,11 @@ function supprimerMedecin($id) {
     }
 }
 
-function putMedecin($civilite, $nom, $prenom){
+function putMedecin($id_medecin,$civilite, $nom, $prenom){
 
     $linkpdo = connexionBdGen::getInstance();
     //Recupérer les données
+    $id_medecin = $_POST['id_medecin'];
     $civilite = $_POST["civilite"];
     $nom = $_POST["nom"];
     $prenom = $_POST["prenom"];
@@ -105,10 +106,24 @@ function putMedecin($civilite, $nom, $prenom){
     $updateSql = "UPDATE medecin SET civilite = '$civilite', nom = '$nom', prenom = '$prenom'";
 
     if ($linkpdo->exec($updateSql) !== false){
-        echo "Medecin modifié";
-    }else{
-        echo "Erreur lors de la mise a jour du medecin : " . print_r($linkpdo->errorInfo());
+        return null;
     }
-    } 
+    }
+
+    function patchMedecin($id_medecin, $dataPatch)
+     {
+        $dataInit = getMedecinById($_POST['id_medecin']);
+
+        for ($i=0; $i < strlen($dataInit) ; $i++) { 
+            if ($dataPatch[$i] != null) {
+                $dataInit[$i] = $dataPatch[$i];
+            }
+        }
+
+        $updateSql = "UPDATE medecin SET civilite = $dataInit['civilite'], nom = $dataInit['nom'], prenom = $data['prenom']";
+        if ($linkpdo->exec($updateSql) !== false){
+            return null;
+        }
+     }
 
 ?>
