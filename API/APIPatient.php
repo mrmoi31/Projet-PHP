@@ -38,14 +38,17 @@ function getUsagerById($id) {
     return $res;
 }
 
-function ajoutUsager($civilite, $nom, $prenom, $sexe, $adresse, $ville, $codePostal, $dateN, $lieuN, $numSecu) {
+
+function ajoutUsager($civilite, $nom, $prenom, $sexe, $adresse, $ville, $codePostal, $dateN, $date_verif, $lieuN, $numSecu) {
     $linkpdo = connexionBdGen::getInstance();
-    $sql = "SELECT * FROM usager WHERE civilite = '$civilite' AND nom = '$nom' AND prenom = '$prenom' and sexe = '$sexe' AND adresse = '$adresse' AND code_postal = '$codePostal' AND ville = '$ville' AND date_nais = '$dateN' AND lieu_nais = '$lieuN' AND num_secu = '$numSecu'";
+    $sql = "SELECT * FROM usager WHERE civilite = '$civilite' AND nom = '$nom' AND prenom = '$prenom' and sexe = '$sexe' AND adresse = '$adresse' AND code_postal = '$codePostal' AND ville = '$ville' AND date_nais = '$date_verif' AND lieu_nais = '$lieuN' AND num_secu = '$numSecu'";
     $res = $linkpdo->query($sql);
     if ($res->rowCount() > 0 ) {
         echo "Ce patient existe deja dans la BD.";
     } else {
-        $insertSql = "INSERT INTO usager(civilite, nom, prenom, sexe, adresse, code_postal, ville, date_nais, lieu_nais, num_secu) VALUES ('$civilite', '$nom', '$prenom', '$sexe', '$adresse', '$codePostal', '$ville', '$dateN', '$lieuN', '$numSecu')";
+        $date_prof = DateTime::createFromFormat('d/m/Y', $dateN);
+        $date_bd = $date_prof->format('Y-m-d');
+        $insertSql = "INSERT INTO usager(civilite, nom, prenom, sexe, adresse, code_postal, ville, date_nais, lieu_nais, num_secu) VALUES ('$civilite', '$nom', '$prenom', '$sexe', '$adresse', '$codePostal', '$ville', '$date_bd', '$lieuN', '$numSecu')";
         if ($linkpdo->exec($insertSql) == true){
             echo "Usager enregistré\n";
         } else {

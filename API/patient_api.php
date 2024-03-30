@@ -37,11 +37,12 @@ $http_method = $_SERVER['REQUEST_METHOD'];
 				$adresse = 		$data["adresse"];
 				$ville = 		$data["ville"];
 				$code_postal = 	$data["code_postal"];
-				$dateN = 		$data["date_nais"];
+				$dateN = 		DateTime::createFromFormat('d/m/Y', $data["date_nais"]);
 				$lieuN = 		$data["lieu_nais"];
 				$numSecu = 		$data["num_secu"];
+				$date_verif = $dateN->format('Y-m-d');
 
-		    	$res = ajoutUsager($civilite, $nom, $prenom, $sexe, $adresse, $ville, $code_postal, $dateN, $lieuN, $numSecu);
+		    	$res = ajoutUsager($civilite, $nom, $prenom, $sexe, $adresse, $ville, $code_postal, $dateN, $lieuN, $numSecu, $date_verif);
 		    	if ($res = null) {
 		    		deliver_response("200", "OK", $res);
 		    	} else {
