@@ -4,7 +4,7 @@ include 'APIStats.php';
 
 $http_method = $_SERVER['REQUEST_METHOD'];
 
-// $cible = ???
+$cible = $_GET['cible'];
 
 switch ($http_method) {
 	case 'GET':
