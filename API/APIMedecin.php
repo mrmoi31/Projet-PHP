@@ -57,7 +57,10 @@ function ajoutMedecin($civilite, $nom, $prenom){
     
     if ($res == true ) {
         if ($stmt->rowCount() > 0 ){
-           echo "Ce medecin existe deja dans la BD.\n";
+            
+            $err = 1;
+            return $err;
+
         }else{
             
                $stmt = "INSERT INTO medecin(civilite, nom, prenom) VALUES(:civilite, :nom, :prenom)";
@@ -67,13 +70,12 @@ function ajoutMedecin($civilite, $nom, $prenom){
                $stmt->bindParam(':prenom', $prenom);
 
             if ($stmt->execute() != false){
-                echo "Medecin enregistré\n";
+                return null;
             }else{
-                echo "Erreur lors de l'insertion du medecin : " . print_r($linkpdo->errorInfo());
+                $err = 2;
+                return $err;
             }
         }
-    }else{
-        deliver_response(400, "Erreur SQL");    
     }
 }
 
@@ -88,36 +90,25 @@ function supprimerMedecin($id) {
     $stmt2->bindParam(':id_medecin', $id, PDO::PARAM_INT);
 
     if ($stmt2->execute() && $stmt->execute()) {
-        echo "Medecin supprimé\n";
-    } else {
-        echo "Erreur lors de la suppression du medecin : " . print_r($stmt->errorInfo(), true);
+        return null; 
     }
-    }
+}
 
-function modifMedecin(){
+function putMedecin($civilite, $nom, $prenom){
 
     $linkpdo = connexionBdGen::getInstance();
     //Recupérer les données
-    $civilite = isset($_POST["civilite"]) ? $_POST["civilite"] : '';
-       $nom = isset($_POST["nom"]) ? $_POST["nom"] : '';
-       $prenom = isset($_POST["prenom"]) ? $_POST["prenom"] : '';
-   
-    //Vérication de doublon
-    $sql = "SELECT * FROM medecin WHERE civilite = '$civilite' AND nom = '$nom' AND prenom = '$prenom'";
-    $result = $linkpdo->query($sql);
-   
-    if ($result->rowCount() > 0 ){
-        echo "Ce medecin existe deja dans la BD.";
-    }else{
-        $updateSql = "UPDATE medecin SET civilite = '$civilite', nom = '$nom', prenom = '$prenom'";
-   
-        if ($linkpdo->exec($updateSql) !== false){
-            echo "Medecin enregistré";
-        }else{
-            echo "Erreur lors de l'insertion du medecin : " . print_r($linkpdo->errorInfo());
-        }
-    } 
+    $civilite = $_POST["civilite"];
+    $nom = $_POST["nom"];
+    $prenom = $_POST["prenom"];
 
+    $updateSql = "UPDATE medecin SET civilite = '$civilite', nom = '$nom', prenom = '$prenom'";
+
+    if ($linkpdo->exec($updateSql) !== false){
+        echo "Medecin modifié";
+    }else{
+        echo "Erreur lors de la mise a jour du medecin : " . print_r($linkpdo->errorInfo());
     }
+    } 
 
 ?>

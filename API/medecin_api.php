@@ -31,7 +31,7 @@ include 'APIMedecin.php';
  			$data = (array) json_decode(file_get_contents('php://input'), TRUE);
 
 	        if (!isset($data['civilite']) || !isset($data['nom']) || !isset($data['prenom'])) {
-	            deliver_response(400, "Données manquantes");
+	            deliver_response('400', "Données manquantes");
 		    }else{
 
 		    $civilite = $data['civilite'];
@@ -39,10 +39,17 @@ include 'APIMedecin.php';
 		    $prenom = $data['prenom'];
 
 		    $res = ajoutMedecin($civilite, $nom, $prenom);
-		    	if ($res != null) {
-		    		deliver_response("200", "OK", $res);
+		    	if ($res == null) {
+		    		deliver_response("200", "Medecin ajouté");
 		    	} else {
-		    		deliver_response("400", "probleme de requete");
+		    		switch ($err) {
+		    			case '1':
+		    				deliver_response("400", "Ce medecin existe déjà");
+		    				break;
+		    			case '2':
+		    				deliver_response("400", "Erreur sql", print_r($linkpdo->errorInfo()));
+		    				break;
+		    		}
 		    	}
 			}
  			break;
@@ -62,26 +69,44 @@ include 'APIMedecin.php';
 					if ($res === null) {
 		   		 		deliver_response("200", "OK");
 		   			} else {
-		   		 		deliver_response("400", "probleme de requete");
+		   		 		deliver_response("400", "Erreur lors de la suppression du medecin", print_r($stmt->errorInfo(), true));
 		   		 	}
 				}
 		
 			break;
 
+			//partiel
 		case "PATCH":
 
-				patchUnePhrase();
+				patchMed();
 		
 			break;
 
+			//total
 		case "PUT":
-		
-				putUnePhrase();
+
+			$data = (array) json_decode(file_get_contents('php://input'), TRUE);
+
+	        if (!isset($data['civilite']) || !isset($data['nom']) || !isset($data['prenom'])) {
+	            deliver_response(400, "Données manquantes");
+		    }else{
+
+		    $civilite = $data['civilite'];
+		    $nom = $data['nom'];
+		    $prenom = $data['prenom'];
+
+		    $res = putMed($civilite, $nom, $prenom);
+		    	if ($res != null) {
+		    		deliver_response("200", "OK", $res);
+		    	} else {
+		    		deliver_response("400", "probleme de requete");
+		    	}
+			}
 		
 			break;
 			
 		default :
-				deliver_response(405, "Bad Method");
+				deliver_response('405', "Bad Method");
 			break;
  	}
 
