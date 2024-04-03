@@ -1,6 +1,6 @@
 <?php 
 
-include 'APIMedecin.php';
+require_once 'APIMedecin.php';
 
  $http_method = $_SERVER['REQUEST_METHOD'];
 
