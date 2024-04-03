@@ -1,6 +1,6 @@
 <?php
 
-//require 'ConnexionBdGen.php';
+//require_once "connexionBdGen.php";
 
 function deliver_response($status_code, $status_message, $data=null){
     /// Paramétrage de l'entête HTTP
@@ -23,8 +23,12 @@ function deliver_response($status_code, $status_message, $data=null){
 
 function getAllMedecins()
     {
-        $linkpdo = connexionBdGen::getInstance();
-   
+        //$linkpdo = connexionBdGen::getInstance();
+        
+        $base_url = "mysql:host=%s;dbname=%s";
+        $url = sprintf($base_url, "localhost", "api_cabinet");
+        $linkpdo = new PDO($url, "root", "omgloltrol");
+
         $stmt = $linkpdo->prepare("SELECT * FROM `medecin`;");
         $stmt->execute();
         $res = ($stmt->fetchAll(PDO::FETCH_ASSOC));
@@ -50,8 +54,12 @@ function getMedecinById($id)
 }
 
 function ajoutMedecin($civilite, $nom, $prenom){
-    $linkpdo = connexionBdGen::getInstance();
-        
+    //$linkpdo = connexionBdGen::getInstance();
+    
+        $base_url = "mysql:host=%s;dbname=%s";
+        $url = sprintf($base_url, "localhost", "api_cabinet");
+        $linkpdo = new PDO($url, "root", "omgloltrol");
+
         $stmt = $linkpdo->prepare("SELECT * FROM `medecin` WHERE civilite = :civilite AND nom = :nom AND prenom =   :prenom");
         $stmt->bindParam(':civilite', $civilite);
         $stmt->bindParam(':nom', $nom);
@@ -84,7 +92,11 @@ function ajoutMedecin($civilite, $nom, $prenom){
 }
 
 function supprimerMedecin($id) {
-    $linkpdo = connexionBdGen::getInstance();
+    //$linkpdo = connexionBdGen::getInstance();
+
+    $base_url = "mysql:host=%s;dbname=%s";
+    $url = sprintf($base_url, "localhost", "api_cabinet");
+    $linkpdo = new PDO($url, "root", "omgloltrol");
 
     $sql = "DELETE FROM `medecin` WHERE id_medecin = :id_medecin";
     $sql2 = "DELETE FROM `consultation` WHERE id_medecin = :id_medecin";
@@ -103,24 +115,30 @@ function supprimerMedecin($id) {
         //$linkpdo = connexionBdGen::getInstance();
 
         $base_url = "mysql:host=%s;dbname=%s";
-            $url = sprintf($base_url, "localhost", "api_cabinet");
-            $linkpdo = new PDO($url, "root", "omgloltrol");
+        $url = sprintf($base_url, "localhost", "api_cabinet");
+        $linkpdo = new PDO($url, "root", "omgloltrol");
 
-        $dataInit = getMedecinById($_GET['id']);
+        $ancienMedecin = getMedecinById($_GET['id']);
 
-        for ($i=0; $i < strlen($dataInit) ; $i++) { 
-            if ($dataPatch[$i] != null) {
-                $dataInit[$i] = $dataPatch[$i];
+            if (isset($dataPatch['nom'])) {
+                $ancienMedecin['nom'] = $dataPatch['nom'];
             }
-        }
+            if (isset($dataPatch['prenom'])) {
+                $ancienMedecin['prenom'] = $dataPatch['prenom'];
+            }
+            if (isset($dataPatch['civilite'])) {
+                $ancienMedecin['civilite'] = $dataPatch['civilite'];
+            }
 
-        $updateSql = "UPDATE 'medecin' SET civilite = ':civilite', nom = :nom, prenom = :prenom";
+        $updateSql = "UPDATE 'medecin' SET civilite = :civilite, nom = :nom, prenom = :prenom WHERE id_medecin = :id";
 
-        $updateSql->bindParam(":civilite", $dataInit['civilite']);
-        $updateSql->bindParam(":nom", $dataInit['nom']);
-        $updateSql->bindParam(":prenom", $data['prenom']);
-        
-        if ($linkpdo->exec($updateSql) !== false){
+        $stmt = $linkpdo->prepare($updateSql);
+        $stmt->bindParam(":civilite", $ancienMedecin['civilite'], PDO::PARAM_STR);
+        $stmt->bindParam(":nom", $ancienMedecin['nom'], PDO::PARAM_STR);
+        $stmt->bindParam(":prenom", $ancienMedecin['prenom'], PDO::PARAM_STR);
+        $stmt->bindParam(":id", $_GET['id'], PDO::PARAM_INT);
+
+        if ($linkpdo->exec($updateSql) != false){
             return null;
         }
      }
