@@ -1,6 +1,6 @@
 <?php
 
-require 'ConnexionBdGen.php';
+//require 'ConnexionBdGen.php';
 
 function deliver_response($status_code, $status_message, $data=null){
     /// Paramétrage de l'entête HTTP
@@ -35,7 +35,11 @@ function getAllMedecins()
 
 function getMedecinById($id)
 {
-    $linkpdo = connexionBdGen::getInstance();
+    //$linkpdo = connexionBdGen::getInstance();
+
+    $base_url = "mysql:host=%s;dbname=%s";
+    $url = sprintf($base_url, "localhost", "api_cabinet");
+    $linkpdo = new PDO($url, "root", "omgloltrol");
 
     $stmt = $linkpdo->prepare("SELECT * FROM `medecin` where id_medecin = :id;");
     $stmt->bindParam(':id', $id);
@@ -94,25 +98,15 @@ function supprimerMedecin($id) {
     }
 }
 
-function putMedecin($id_medecin,$civilite, $nom, $prenom){
-
-    $linkpdo = connexionBdGen::getInstance();
-    //Recupérer les données
-    $id_medecin = $_POST['id_medecin'];
-    $civilite = $_POST["civilite"];
-    $nom = $_POST["nom"];
-    $prenom = $_POST["prenom"];
-
-    $updateSql = "UPDATE medecin SET civilite = '$civilite', nom = '$nom', prenom = '$prenom'";
-
-    if ($linkpdo->exec($updateSql) !== false){
-        return null;
-    }
-    }
-
     function patchMedecin($id_medecin, $dataPatch)
      {
-        $dataInit = getMedecinById($_POST['id_medecin']);
+        //$linkpdo = connexionBdGen::getInstance();
+
+        $base_url = "mysql:host=%s;dbname=%s";
+            $url = sprintf($base_url, "localhost", "api_cabinet");
+            $linkpdo = new PDO($url, "root", "omgloltrol");
+
+        $dataInit = getMedecinById($_GET['id']);
 
         for ($i=0; $i < strlen($dataInit) ; $i++) { 
             if ($dataPatch[$i] != null) {
@@ -120,7 +114,12 @@ function putMedecin($id_medecin,$civilite, $nom, $prenom){
             }
         }
 
-        $updateSql = "UPDATE medecin SET civilite = $dataInit['civilite'], nom = $dataInit['nom'], prenom = $data['prenom']";
+        $updateSql = "UPDATE 'medecin' SET civilite = ':civilite', nom = :nom, prenom = :prenom";
+
+        $updateSql->bindParam(":civilite", $dataInit['civilite']);
+        $updateSql->bindParam(":nom", $dataInit['nom']);
+        $updateSql->bindParam(":prenom", $data['prenom']);
+        
         if ($linkpdo->exec($updateSql) !== false){
             return null;
         }
