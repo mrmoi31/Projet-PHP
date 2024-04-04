@@ -81,7 +81,7 @@ require_once 'APIMedecin.php';
 				$id_medecin = $_GET['id'];
 				$res = patchMedecin($id_medecin, $dataPatch);
 
-				if ($res == null) {
+				if ($res != null) {
 		    		deliver_response("200", "OK", $res);
 		    	} else {
 		    		deliver_response("400", "Erreur lors de la modification du medecin", print_r($linkpdo->errorInfo()));
