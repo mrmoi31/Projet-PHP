@@ -135,7 +135,13 @@ function supprimerMedecin($id) {
                 $ancienMedecin['civilite'] = $dataPatch['civilite'];
             }
 
-        $updateSql = "UPDATE 'medecin' SET civilite = :civilite, nom = :nom, prenom = :prenom WHERE id_medecin = :id";
+            //deliver_response("400", "feur", $ancienMedecin);
+
+            echo $ancienMedecin['nom'];
+            //echo $ancienMedecin['civilite'];
+            //echo $ancienMedecin['prenom'];
+
+        $updateSql = "UPDATE `medecin` SET civilite = :civilite, nom = :nom, prenom = :prenom WHERE id_medecin = :id";
 
         $stmt = $linkpdo->prepare($updateSql);
         $stmt->bindParam(":civilite", $ancienMedecin['civilite'], PDO::PARAM_STR);

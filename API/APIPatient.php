@@ -1,6 +1,6 @@
 <?php
 
-require 'ConnexionBdGen.php';
+//require_once 'connexionBdGen.php';
 
 function deliver_response($status_code, $status_message, $data=null) {
     // Paramétrage de l'entête HTTP
@@ -37,10 +37,15 @@ function getUsagerById($id) {
     $linkpdo = null;
     return $res;
 }
-
+date_default_timezone_set('UTC');
 
 function ajoutUsager($civilite, $nom, $prenom, $sexe, $adresse, $codePostal, $ville, $dateN, $lieuN, $numSecu,$date_verif) {
-    $linkpdo = connexionBdGen::getInstance();
+    //$linkpdo = connexionBdGen::getInstance();
+
+    $base_url = "mysql:host=%s;dbname=%s";
+    $url = sprintf($base_url, "localhost", "api_cabinet");
+    $linkpdo = new PDO($url, "root", "omgloltrol");
+
     $sql = "SELECT * FROM usager WHERE civilite = '$civilite' AND nom = '$nom' AND prenom = '$prenom' and sexe = '$sexe' AND adresse = '$adresse' AND code_postal = '$codePostal' AND ville = '$ville' AND date_nais = '$date_verif' AND lieu_nais = '$lieuN' AND num_secu = '$numSecu'";
     $res = $linkpdo->query($sql);
     if ($res->rowCount() > 0 ) {
@@ -68,31 +73,41 @@ function supprimerUsager($id) {
         echo "Erreur lors de la suppression du Patient : " . print_r($stmt->errorInfo(), true);
     }
 }
-//Faire Modif Usager
-// function modifUsager() {
-//     $linkpdo = connexionBdGen::getInstance();
-//     $civilite = isset($_POST["civilite"]) ? $_POST["civilite"] : '';
-//     $nom = isset($_POST["nom"]) ? $_POST["nom"] : '';
-//     $prenom = isset($_POST["prenom"]) ? $_POST["prenom"] : '';
-//     $adresse = isset($_POST["adresse"]) ? $_POST["adresse"] : '';
-//     $ville = isset($_POST["ville"]) ? $_POST["ville"] : '';
-//     $code_postal = isset($_POST["codePostal"]) ? $_POST["codePostal"] : '';
-//     $dateN = isset($_POST["dateNaissance"]) ? $_POST["dateNaissance"] : '';
-//     $lieuxN = isset($_POST["lieuNaissance"]) ? $_POST["lieuNaissance"] : '';
-//     $numSecu = isset($_POST["numSecu"]) ? $_POST["numSecu"] : '';
-//     $id_medecin = isset($_POST["id_medecin"]) ? $_POST["id_medecin"] : '';
-//     $sql = "SELECT * FROM patient WHERE civilite = '$civilite' AND nom = '$nom' AND prenom = '$prenom' AND adresse = '$adresse' AND codePostal = '$code_postal' AND ville = '$ville' AND dateNaissance = '$dateN' AND lieuNaissance = '$lieuxN' AND numSecu = '$numSecu' ";
-//     $result = $linkpdo->query($sql);
-//      if ($result->rowCount() > 0 ){
-//         echo "Ce patient existe deja dans la BD.";
-//     } else {
-//         $updateSql = "UPDATE patient SET civilite = '$civilite', nom = '$nom', prenom = '$prenom', adresse = '$adresse', codePostal = '$code_postal', ville = '$ville', dateNaissance = '$dateN', lieuNaissance = '$lieuxN', numSecu = '$numSecu', id_medecin = '$id_medecin' ";
-//         if ($linkpdo->exec($updateSql) !== false){
-//             echo "Patient enregistré";
-//         } else {
-//             echo "Erreur lors de la modification du patient : " . print_r($linkpdo->errorInfo());
-//         }
-//     }
-// }
+
+ function modifUsager($id_usager, $dataPatch) {
+             //$linkpdo = connexionBdGen::getInstance();
+
+        $base_url = "mysql:host=%s;dbname=%s";
+        $url = sprintf($base_url, "localhost", "api_cabinet");
+        $linkpdo = new PDO($url, "root", "omgloltrol");
+
+        $ancienUsager = getUsagerById($_GET['id']);
+
+            if (isset($dataPatch['ville'])) {
+                $ancienUsager['ville'] = $dataPatch['ville'];
+            }
+            //if (isset($dataPatch['prenom'])) {
+            //    $ancienUsager['prenom'] = $dataPatch['prenom'];
+            //}
+            //if (isset($dataPatch['civilite'])) {
+            //    $ancienUsager['civilite'] = $dataPatch['civilite'];
+            //}
+
+            //deliver_response("400", "feur", $ancienMedecin);
+
+            echo $ancienUsager['ville'];
+
+        $updateSql = "UPDATE `usager` SET ville = :ville WHERE id_usager = :id";
+
+        $stmt = $linkpdo->prepare($updateSql);
+        //$stmt->bindParam(":civilite", $ancienMedecin['civilite'], PDO::PARAM_STR);
+        //$stmt->bindParam(":nom", $ancienMedecin['nom'], PDO::PARAM_STR);
+        $stmt->bindParam(":ville", $ancienUsager['ville'], PDO::PARAM_STR);
+        $stmt->bindParam(":id", $_GET['id'], PDO::PARAM_INT);
+
+        if ($linkpdo->exec($updateSql) != false){
+            return null;
+        }
+    }
 
 ?>

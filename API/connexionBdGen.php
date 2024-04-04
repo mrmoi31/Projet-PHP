@@ -8,7 +8,7 @@ class connexionBdGen{
         try{
             $base_url = "mysql:host=%s;dbname=%s";
             $url = sprintf($base_url, "localhost", "api_cabinet");
-            $this->_pdo = new PDO($url, "root", "");
+            $this->_pdo = new PDO($url, "root", "omgloltrol");
         }catch (PDOException $e){
             die('Erreur: ' . $e->getMessage());
 

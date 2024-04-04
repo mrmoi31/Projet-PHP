@@ -80,6 +80,7 @@ require_once 'APIMedecin.php';
 				$dataPatch = (array) json_decode(file_get_contents('php://input'), TRUE);
 				$id_medecin = $_GET['id'];
 				$res = patchMedecin($id_medecin, $dataPatch);
+
 				if ($res == null) {
 		    		deliver_response("200", "OK", $res);
 		    	} else {

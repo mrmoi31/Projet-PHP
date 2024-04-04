@@ -72,7 +72,7 @@ $http_method = $_SERVER['REQUEST_METHOD'];
 
 		case "PATCH":
 
-				patchUnPatient();
+				modifUsager($id_usager, $dataPatch);
 		
 			break;
 
