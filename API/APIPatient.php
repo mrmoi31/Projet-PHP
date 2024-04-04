@@ -75,7 +75,8 @@ function supprimerUsager($id) {
 }
 
  function modifUsager($id_usager, $dataPatch) {
-             //$linkpdo = connexionBdGen::getInstance();
+             {
+        //$linkpdo = connexionBdGen::getInstance();
 
         $base_url = "mysql:host=%s;dbname=%s";
         $url = sprintf($base_url, "localhost", "api_cabinet");
@@ -83,31 +84,52 @@ function supprimerUsager($id) {
 
         $ancienUsager = getUsagerById($_GET['id']);
 
-            if (isset($dataPatch['ville'])) {
-                $ancienUsager['ville'] = $dataPatch['ville'];
+            if (isset($dataPatch['sexe'])) {
+                $ancienUsager['sexe'] = $dataPatch['sexe']
             }
-            //if (isset($dataPatch['prenom'])) {
-            //    $ancienUsager['prenom'] = $dataPatch['prenom'];
-            //}
-            //if (isset($dataPatch['civilite'])) {
-            //    $ancienUsager['civilite'] = $dataPatch['civilite'];
-            //}
+            if (isset($dataPatch['nom'])) {
+                $ancienUsager['nom'] = $dataPatch['nom'];
+            }
+            if (isset($dataPatch['prenom'])) {
+                $ancienUsager['prenom'] = $dataPatch['prenom'];
+            }
+            if (isset($dataPatch['civilite'])) {
+                $ancienUsager['civilite'] = $dataPatch['civilite'];
+            }
+            if (isset($dataPatch['adresse'])) {
+                $ancienUsager['adresse'] = $dataPatch['adresse']
+            }
+            if (isset($dataPatch['code_postal'])) {
+                $ancienUsager['code_postal'] = $dataPatch['code_postal']
+            }
+            if (isset($dataPatch['ville'])) {
+                $ancienUsager['ville'] = $dataPatch['ville']
+            }
+            if (isset($dataPatch['date_nais'])) {
+                $ancienUsager['date_nais'] = $dataPatch['date_nais']
+            }
+            if (isset($dataPatch['lieu_nais'])) {
+                $ancienUsager['lieu_nais'] = $dataPatch['lieu_nais']
+            }
+            if (isset($dataPatch['num_secu'])) {
+                $ancienUsager['num_secu'] = $dataPatch['num_secu']
+            }
 
-            //deliver_response("400", "feur", $ancienMedecin);
-
-            echo $ancienUsager['ville'];
-
-        $updateSql = "UPDATE `usager` SET ville = :ville WHERE id_usager = :id";
+        $updateSql = "UPDATE `usager` SET civilite = :civilite, nom = :nom, prenom =:prenom WHERE id_medecin=:id";
 
         $stmt = $linkpdo->prepare($updateSql);
-        //$stmt->bindParam(":civilite", $ancienMedecin['civilite'], PDO::PARAM_STR);
-        //$stmt->bindParam(":nom", $ancienMedecin['nom'], PDO::PARAM_STR);
-        $stmt->bindParam(":ville", $ancienUsager['ville'], PDO::PARAM_STR);
+        $stmt->bindParam(":civilite", $ancienUsager['civilite'], PDO::PARAM_STR);
+        $stmt->bindParam(":nom", $ancienUsager['nom'], PDO::PARAM_STR);
+        $stmt->bindParam(":prenom", $ancienUsager['prenom'], PDO::PARAM_STR);
         $stmt->bindParam(":id", $_GET['id'], PDO::PARAM_INT);
 
-        if ($linkpdo->exec($updateSql) != false){
-            return null;
+        try {
+            $stmt->execute();
+            return getUsagerById($_GET['id']);
+        } catch (PDOException $e) {
+            deliver_response("400", "ERROR", $e->errorInfo[1]);
+            exit;
         }
-    }
+     }
 
 ?>

@@ -72,7 +72,15 @@ $http_method = $_SERVER['REQUEST_METHOD'];
 
 		case "PATCH":
 
+				$dataPatch = (array) json_decode(file_get_contents('php://input'), TRUE);
+				$id_usager = $_GET['id'];
 				modifUsager($id_usager, $dataPatch);
+
+				if ($res == null) {
+		    		deliver_response("200", "OK", $res);
+		    	} else {
+		    		deliver_response("400", "Erreur lors de la modification de l'usager", print_r($linkpdo->errorInfo()));
+		    	}
 		
 			break;
 
