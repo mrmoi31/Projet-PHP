@@ -1,6 +1,6 @@
 <?php
 
-//require_once "connexionBdGen.php";
+require_once "connexionBdGen.php";
 
 function deliver_response($status_code, $status_message, $data=null){
     /// Paramétrage de l'entête HTTP
@@ -43,7 +43,7 @@ function getMedecinById($id)
 
     $base_url = "mysql:host=%s;dbname=%s";
     $url = sprintf($base_url, "localhost", "api_cabinet");
-    $linkpdo = new PDO($url, "root", "omgloltrol");
+    $linkpdo = new PDO($url, "root", "");
 
     $stmt = $linkpdo->prepare("SELECT * FROM `medecin` where id_medecin = :id;");
     $stmt->bindParam(':id', $id);
@@ -115,8 +115,13 @@ function supprimerMedecin($id) {
         //$linkpdo = connexionBdGen::getInstance();
 
         $base_url = "mysql:host=%s;dbname=%s";
+<<<<<<< Updated upstream
         $url = sprintf($base_url, "localhost", "api_cabinet");
         $linkpdo = new PDO($url, "root", "omgloltrol");
+=======
+            $url = sprintf($base_url, "localhost", "api_cabinet");
+            $linkpdo = new PDO($url, "root", "");
+>>>>>>> Stashed changes
 
         $ancienMedecin = getMedecinById($_GET['id']);
 

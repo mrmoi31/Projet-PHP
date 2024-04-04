@@ -42,11 +42,12 @@ $http_method = $_SERVER['REQUEST_METHOD'];
 				$numSecu = 		$data["num_secu"];
 				$date_verif = $dateN->format('Y-m-d');
 
-		    	$res = ajoutUsager($civilite, $nom, $prenom, $sexe, $adresse, $ville, $code_postal, $dateN, $lieuN, $numSecu, $date_verif);
+		    	$res = ajoutUsager($civilite, $nom, $prenom, $sexe, $adresse, $code_postal, $ville, $dateN, $lieuN, $numSecu, $date_verif);
 		    	if ($res = null) {
-		    		deliver_response("200", "OK", $res);
-		    	} else {
 		    		deliver_response("400", "probleme de requete");
+		    	} else {
+		    		
+					deliver_response("200", "OK", $res);
 		    	}	
 			}
 

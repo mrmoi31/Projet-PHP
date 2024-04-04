@@ -42,7 +42,7 @@ require_once 'APIMedecin.php';
 		    	if ($res == null) {
 		    		deliver_response("200", "Medecin ajouté");
 		    	} else {
-		    		switch ($err) {
+		    		switch ($res) {
 		    			case '1':
 		    				deliver_response("400", "Ce medecin existe déjà");
 		    				break;

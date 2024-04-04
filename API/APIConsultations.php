@@ -48,7 +48,7 @@ function ajoutConsultation($id_medecin, $id_patient, $dateRDV, $heureRDV, $duree
     //Recupérer les données
    //Vérication de doublon
    $sql = "SELECT * FROM consultation WHERE id_medecin = '$id_medecin' AND date_consult = '$dateRDV' AND heure_consult = '$heureRDV' AND id_usager = '$id_patient' AND duree_consult = '$dureeCons'; ";
-   $result = $linkpdo->query($sql);
+   $result = $linkpdo->prepare($sql);
    if ($result->rowCount() > 0 ){
     echo "Ce rdv existe deja dans la BD.";
    }else{
