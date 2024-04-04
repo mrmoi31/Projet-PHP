@@ -49,6 +49,7 @@ function getMedecinById($id)
     $stmt->bindParam(':id', $id);
     $stmt->execute();
     $res = $stmt->fetch(PDO::FETCH_ASSOC);
+    $linkpdo = null;
     if ($res) {
         $medecin  = array(
             'id' => $res['id_medecin'],
@@ -56,9 +57,10 @@ function getMedecinById($id)
             'prenom' => $res['prenom'],
             'civilite' => $res['civilite']
          );
+        return $medecin;
+    } else {
+        return null;
     }
-    $linkpdo = null;
-    return $medecin;
 }
 
 function ajoutMedecin($civilite, $nom, $prenom){
@@ -137,12 +139,6 @@ function supprimerMedecin($id) {
             if (isset($dataPatch['civilite'])) {
                 $ancienMedecin['civilite'] = $dataPatch['civilite'];
             }
-
-            //deliver_response("400", "feur", $ancienMedecin);
-
-           
-            //echo $ancienMedecin['civilite'];
-            //echo $ancienMedecin['prenom'];
 
         $updateSql = "UPDATE `medecin` SET civilite = :civilite, nom = :nom, prenom =:prenom WHERE id_medecin=:id";
 

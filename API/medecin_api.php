@@ -66,10 +66,10 @@ require_once 'APIMedecin.php';
 					$id = $_GET['id'];
 
 					$res = supprimerMedecin($id);
-					if ($res === null) {
+					if ($res != null) {
 		   		 		deliver_response("200", "OK");
 		   			} else {
-		   		 		deliver_response("400", "Erreur lors de la suppression du medecin", print_r($stmt->errorInfo(), true));
+		   		 		deliver_response("400", "Erreur lors de la suppression du medecin", print_r($linkpdo->errorInfo(), true));
 		   		 	}
 				}
 		
@@ -84,7 +84,7 @@ require_once 'APIMedecin.php';
 				if ($res != null) {
 		    		deliver_response("200", "OK", $res);
 		    	} else {
-		    		deliver_response("400", "Erreur lors de la modification du medecin", print_r($linkpdo->errorInfo()));
+		    		deliver_response("400", "Erreur lors de la modification du medecin");
 		    	}
 		
 			break;
