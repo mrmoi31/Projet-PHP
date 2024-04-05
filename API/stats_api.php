@@ -1,6 +1,6 @@
 <?php
 
-include 'APIStats.php';
+require_once 'APIStats.php';
 
 $http_method = $_SERVER['REQUEST_METHOD'];
 
