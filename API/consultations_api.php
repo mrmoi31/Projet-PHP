@@ -44,7 +44,7 @@ require_once 'APIConsultations.php';
 
 		    $res = ajoutConsultation($id_medecin, $id_patient ,$dateRDV, $heureRDV, $dureeCons);
 		    if ($res === "good") {
-		    	deliver_response("200", "OK", $res);
+		    	deliver_response("200", "OK");
 		    } elseif ($res === "existant") {
 		    	deliver_response("400", "Cette consultation existe déjà");
 		    } else {
@@ -87,7 +87,7 @@ require_once 'APIConsultations.php';
 				} elseif ($res === "vide") {
 					deliver_response("400", "consultation non trouvée");
 				} else {
-					
+					deliver_response("400", "Erreur SQL : ", $res);
 				}
 		
 			break;

@@ -32,6 +32,9 @@ function getAllMedecins()
         $stmt = $linkpdo->prepare("SELECT * FROM `medecin`;");
         $stmt->execute();
         $res = ($stmt->fetchAll(PDO::FETCH_ASSOC));
+        if (!$res) {
+            $res = "vide";
+        }
         $linkpdo = null;
         return $res;
     
@@ -58,10 +61,15 @@ function getMedecinById($id)
             'civilite' => $res['civilite']
          );
         return $medecin;
+    } elseif (!$res) {
+        $res = "vide";
+        return $res;
     } else {
-        return null;
+        $res = $linkpdo->errorInfo();
+        return $res;
     }
 }
+
 
 function ajoutMedecin($civilite, $nom, $prenom){
     //$linkpdo = connexionBdGen::getInstance();
@@ -79,10 +87,8 @@ function ajoutMedecin($civilite, $nom, $prenom){
     
     if ($res == true ) {
         if ($stmt->rowCount() > 0 ){
-            
-            $err = 1;
-            return $err;
-
+            $status = "existant";
+            return $status;
         }else{
             
                $stmt = "INSERT INTO medecin(civilite, nom, prenom) VALUES(:civilite, :nom, :prenom)";
@@ -92,10 +98,11 @@ function ajoutMedecin($civilite, $nom, $prenom){
                $stmt->bindParam(':prenom', $prenom);
 
             if ($stmt->execute() != false){
-                return null;
+                $status = "good";
+                return $status;
             }else{
-                $err = 2;
-                return $err;
+                $status = $linkpdo->errorInfo();
+                return $status;
             }
         }
     }
@@ -108,15 +115,26 @@ function supprimerMedecin($id) {
     $url = sprintf($base_url, "localhost", "api_cabinet");
     $linkpdo = new PDO($url, "root", "omgloltrol");
 
-    $sql = "DELETE FROM `medecin` WHERE id_medecin = :id_medecin";
-    $sql2 = "DELETE FROM `consultation` WHERE id_medecin = :id_medecin";
-    $stmt = $linkpdo->prepare($sql);
-    $stmt2 = $linkpdo->prepare($sql2);
-    $stmt->bindParam(':id_medecin', $id, PDO::PARAM_INT);
-    $stmt2->bindParam(':id_medecin', $id, PDO::PARAM_INT);
+    $sql = getMedecinById($id);
+    if ($sql === "vide") {
+        $status = "vide";
+        return $status;
+    } else {
 
-    if ($stmt2->execute() && $stmt->execute()) {
-        return null; 
+        $sql = "DELETE FROM `medecin` WHERE id_medecin = :id_medecin";
+        $sql2 = "DELETE FROM `consultation` WHERE id_medecin = :id_medecin";
+        $stmt = $linkpdo->prepare($sql);
+        $stmt2 = $linkpdo->prepare($sql2);
+        $stmt->bindParam(':id_medecin', $id, PDO::PARAM_INT);
+        $stmt2->bindParam(':id_medecin', $id, PDO::PARAM_INT);
+    
+        if ($stmt2->execute() && $stmt->execute()) {
+            $status = "good";
+            return $status;
+        } else {
+            $status = $linkpdo->errorInfo();
+            return $status;
+        }
     }
 }
 
@@ -129,6 +147,11 @@ function supprimerMedecin($id) {
         $linkpdo = new PDO($url, "root", "omgloltrol");
 
         $ancienMedecin = getMedecinById($_GET['id']);
+
+        if ($ancienMedecin === "vide") {
+            $status = "vide";
+            return $status;
+        }
 
             if (isset($dataPatch['nom'])) {
                 $ancienMedecin['nom'] = $dataPatch['nom'];
@@ -148,12 +171,12 @@ function supprimerMedecin($id) {
         $stmt->bindParam(":prenom", $ancienMedecin['prenom'], PDO::PARAM_STR);
         $stmt->bindParam(":id", $_GET['id'], PDO::PARAM_INT);
 
-        try {
-            $stmt->execute();
-            return getMedecinById($_GET['id']);
-        } catch (PDOException $e) {
-            deliver_response("400", "ERROR", $e->errorInfo[1]);
-            exit;
+        if ($stmt->execute()) {
+            $status = "good";
+            return $status;
+        } else {
+            $status = $linkpdo->errorInfo();
+            return $status;
         }
      }
 

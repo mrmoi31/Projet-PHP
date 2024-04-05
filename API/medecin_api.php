@@ -7,23 +7,25 @@ require_once 'APIMedecin.php';
  	switch ($http_method) {
  		case 'GET':
 
- 			if (!isset($_GET['id'])) {
- 				
- 				$res = getAllMedecins();
-	 			if ($res != null) {
-			    	deliver_response("200", "OK", $res);
-			    } else {
-			    	deliver_response("400", "probleme de requete");
-			    }
-
- 			}else {
- 				$res = getMedecinById($_GET['id']);
- 				if ($res != null) {
-		    		deliver_response("200", "OK", $res);
-		    	} else {
-		    		deliver_response("400", "probleme de requete");
-		    	}
- 			}
+			if (!isset($_GET['id'])) {
+				$res = getAllMedecins();
+				if ($res != null) {
+					deliver_response("200", "OK", $res);
+				} elseif ($res === "vide") {
+					deliver_response("400", "Aucun enregistré");
+				} else {
+					deliver_response("400", "Erreur SQL : ", $res);
+				}
+			}else{
+				$res = getMedecinById($_GET['id']);
+				if (isset($res['id'])) {
+					deliver_response("200", "OK", $res);
+				} elseif ($res === "vide") {
+					deliver_response("400", "Ce medecin n'existe pas");
+				} else {
+					deliver_response("400", "Erreur SQL : ", $res);
+				}
+			}	
  			
  			break;
 
@@ -39,19 +41,14 @@ require_once 'APIMedecin.php';
 		    $prenom = $data['prenom'];
 
 		    $res = ajoutMedecin($civilite, $nom, $prenom);
-		    	if ($res == null) {
-		    		deliver_response("200", "Medecin ajouté");
-		    	} else {
-		    		switch ($res) {
-		    			case '1':
-		    				deliver_response("400", "Ce medecin existe déjà");
-		    				break;
-		    			case '2':
-		    				deliver_response("400", "Erreur sql", print_r($linkpdo->errorInfo()));
-		    				break;
-		    		}
-		    	}
+		    	if ($res === "good") {
+		    		deliver_response("200", "OK");
+		    	} elseif ($res === "existant") {
+		    	deliver_response("400", "Ce medecin existe déjà");
+		    } else {
+		    	deliver_response("400", "Erreur SQL :", $res);
 			}
+		}
  			break;
 
  		
@@ -66,11 +63,13 @@ require_once 'APIMedecin.php';
 					$id = $_GET['id'];
 
 					$res = supprimerMedecin($id);
-					if ($res != null) {
-		   		 		deliver_response("200", "OK");
-		   			} else {
-		   		 		deliver_response("400", "Erreur lors de la suppression du medecin", print_r($linkpdo->errorInfo(), true));
-		   		 	}
+		    		if ($res === "good") {
+		    			deliver_response("200", "OK", $res);
+		    		} elseif ($res === "vide") {
+		    			deliver_response("400", "Ce medecin n'existe pas");
+		    		} else {
+		    			deliver_response("400", "Erreur SQL :", $res);
+		    		}
 				}
 		
 			break;
@@ -81,11 +80,13 @@ require_once 'APIMedecin.php';
 				$id_medecin = $_GET['id'];
 				$res = patchMedecin($id_medecin, $dataPatch);
 
-				if ($res != null) {
-		    		deliver_response("200", "OK", $res);
-		    	} else {
-		    		deliver_response("400", "Erreur lors de la modification du medecin");
-		    	}
+				if ($res === "good") {
+					deliver_response("200", "OK", getConsultById($_GET['id']));
+				} elseif ($res === "vide") {
+					deliver_response("400", "medecin non trouvée");
+				} else {
+					deliver_response("400", "Erreur SQL : ", $res);
+				}
 		
 			break;
 			
