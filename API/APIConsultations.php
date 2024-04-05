@@ -57,7 +57,6 @@ function getConsultById($id)
         } else {
             return $res;
         }
-        return $res;
     }
 
 function ajoutConsultation($id_medecin, $id_patient, $dateRDV, $heureRDV, $dureeCons){

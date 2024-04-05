@@ -30,7 +30,12 @@ function getAllUsager() {
     $stmt->execute();
     $res = ($stmt->fetchAll(PDO::FETCH_ASSOC));
     $linkpdo = null;
-    return $res;
+    if ($res) {
+        return $res;
+    } else{
+        $res = "vide";
+        return $res;
+    }
 }
 
 function getUsagerById($id) {
@@ -59,8 +64,9 @@ function getUsagerById($id) {
             'num_secu' => $res['num_secu']
          );
         return $usager;
-    } else {
-        return null;
+    }else {
+        $res = "vide";
+        return $res;
     }
 }
 
@@ -73,17 +79,20 @@ function ajoutUsager($civilite, $nom, $prenom, $sexe, $adresse, $codePostal, $vi
 
     $sql = "SELECT * FROM usager WHERE civilite = '$civilite' AND nom = '$nom' AND prenom = '$prenom' and sexe = '$sexe' AND adresse = '$adresse' AND code_postal = '$codePostal' AND ville = '$ville' AND date_nais = '$date_verif' AND lieu_nais = '$lieuN' AND num_secu = '$numSecu'";
     $res = $linkpdo->query($sql);
-    if ($res->rowCount() > 0 ) {
-        echo "Ce patient existe deja dans la BD.";
-    } else {
-        
+
+    if ($res->rowCount() > 0 ){
+        $status = "existant";
+        return $status;
+    }else{        
         $date_bd = $dateN->format('Y-m-d');
         $insertSql = "INSERT INTO usager(civilite, nom, prenom, sexe, adresse, code_postal, ville, date_nais, lieu_nais, num_secu) VALUES ('$civilite', '$nom', '$prenom', '$sexe', '$adresse', '$codePostal', '$ville', '$date_bd', '$lieuN', '$numSecu')";
         if ($linkpdo->exec($insertSql) == true){
-            echo "Usager enregistré\n";
-        } else {
-            echo "Erreur lors de l'insertion de l'usager : " . print_r($linkpdo->errorInfo());
-        }
+            $status = "good";
+            return $status;
+        }else{
+            $status = $linkpdo->errorInfo();
+            return $status;
+       }
     }
 }
   
@@ -93,13 +102,22 @@ function supprimerUsager($id) {
     $url = sprintf($base_url, "localhost", "api_cabinet");
     $linkpdo = new PDO($url, "root", "omgloltrol");
 
-    $sql = "DELETE FROM `usager` WHERE id_usager = :id_usager";
-    $stmt = $linkpdo->prepare($sql);
-    $stmt->bindParam(':id_usager', $id, PDO::PARAM_INT);
-    if ($stmt->execute()) {
-        echo "Usager supprimé\n";
+    $sql = getUsagerById($id);
+
+    if ($sql === "vide") {
+        $status = "vide";
+        return $status;
     } else {
-        echo "Erreur lors de la suppression du Patient : " . print_r($stmt->errorInfo(), true);
+        $sql = "DELETE FROM `usager` WHERE id_usager = :id_usager";
+        $stmt = $linkpdo->prepare($sql);
+        $stmt->bindParam(':id_usager', $id, PDO::PARAM_INT);
+        if ($stmt->execute()) {
+            $status = "good";
+            return $status;
+        } else {
+            $status = $linkpdo->errorInfo();
+            return $status;
+        }
     }
 }
 
@@ -111,6 +129,11 @@ function supprimerUsager($id) {
         $linkpdo = new PDO($url, "root", "omgloltrol");
 
         $ancienUsager = getUsagerById($_GET['id']);
+
+        if ($ancienUsager === "vide") {
+            $status = "vide";
+            return $status;
+        }
 
             if (isset($dataPatch['sexe'])) {
                 $ancienUsager['sexe'] = $dataPatch['sexe'];
@@ -158,14 +181,12 @@ function supprimerUsager($id) {
         $stmt->bindParam(":num_secu", $ancienUsager['num_secu'], PDO::PARAM_STR);
         $stmt->bindParam(":id", $_GET['id'], PDO::PARAM_INT);
 
-        print_r($ancienUsager);
-
-        try {
-            $stmt->execute();
-            return getUsagerById($_GET['id']);
-        } catch (PDOException $e) {
-            deliver_response("400", "ERROR", $e->errorInfo[1]);
-            exit;
+        if ($stmt->execute()) {
+            $status = "good";
+            return $status;
+        } else {
+            $status = $linkpdo->errorInfo();
+            return $status;
         }
      }
 

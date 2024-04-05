@@ -8,17 +8,21 @@ $http_method = $_SERVER['REQUEST_METHOD'];
  		case 'GET':
 			if (!isset($_GET['id'])) {
 				$res = getAllUsager();
-				if ($res != null) {
+				if ($res === "vide") {
+					deliver_response("400", "Aucun usager enregistré");
+				} elseif ($res != null) {
 					deliver_response("200", "OK", $res);
 				} else {
-					deliver_response("400", "probleme de requete");
+					deliver_response("400", "Erreur SQL :", $res);
 				}
 			} else {
 				$res = getUsagerById($_GET['id']);
-				if ($res != null) {
+				if ($res === "vide") {
+					deliver_response("400", "Cet usager n'existe pas");
+				} elseif ($res != null) {
 					deliver_response("200", "OK", $res);
 				} else {
-					deliver_response("400", "probleme de requete");
+					deliver_response("400", "Erreur SQL :", $res);
 				}
 			}
  			
@@ -43,12 +47,13 @@ $http_method = $_SERVER['REQUEST_METHOD'];
 				$date_verif = $dateN->format('Y-m-d');
 
 		    	$res = ajoutUsager($civilite, $nom, $prenom, $sexe, $adresse, $code_postal, $ville, $dateN, $lieuN, $numSecu, $date_verif);
-		    	if ($res = null) {
-		    		deliver_response("400", "probleme de requete");
+		    	if ($res === "good") {
+		    		deliver_response("200", "OK");
+		    	} elseif ($res === "existant") {
+		    		deliver_response("400", "Cet usager existe déjà");
 		    	} else {
-		    		
-					deliver_response("200", "OK", $res);
-		    	}	
+		    		deliver_response("400", "Erreur SQL :", $res);
+		    	}
 			}
 
  		break;		
@@ -57,15 +62,17 @@ $http_method = $_SERVER['REQUEST_METHOD'];
 			$data = (array) json_decode(file_get_contents('php://input'), TRUE);
 		
 			if (!isset($_GET['id'])) {
-				deliver_response(400, "Données manquantes");
+				deliver_response("400", "Données manquantes");
 			} else {
 				$id = $_GET['id'];
 				$res = supprimerUsager($id);
-				if ($res === null) {
-		   		 	deliver_response("200", "OK");
-		   		} else {
-		   		 	deliver_response("400", "probleme de requete");
-		   		}
+		    	if ($res === "good") {
+		    		deliver_response("200", "OK", $res);
+		    	} elseif ($res === "vide") {
+		    		deliver_response("400", "Cet usager n'existe pas");
+		    	} else {
+		    		deliver_response("400", "Erreur SQL :", $res);
+		    	}
 			}
 		
 		break;
@@ -76,11 +83,13 @@ $http_method = $_SERVER['REQUEST_METHOD'];
 				$id_usager = $_GET['id'];
 				$res = modifUsager($id_usager, $dataPatch);
 
-				if ($res != null) {
-		    		deliver_response("200", "OK", $res);
-		    	} else {
-		    		deliver_response("400", "Erreur lors de la modification de l'usager");
-		    	}
+				if ($res === "good") {
+					deliver_response("200", "OK", getUsagerById($_GET['id']));
+				} elseif ($res === "vide") {
+					deliver_response("400", "usager non trouvé");
+				} else {
+					deliver_response("400", "Erreur SQL : ", $res);
+				}
 		
 			break;
  	}
