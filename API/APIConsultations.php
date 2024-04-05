@@ -29,20 +29,11 @@ function getAllConsult()
         $stmt = $linkpdo->prepare("SELECT * FROM `consultation`;");
         $stmt->execute();
         $res = ($stmt->fetchAll(PDO::FETCH_ASSOC));
+        $linkpdo = null;
         if ($res) {
-            $consult  = array(
-                'id_medecin' => $res['id_medecin'],
-                'id_usager' => $res['id_usager'],
-                'date_nais' => $res['date_nais'],
-                'lieu_nais' => $res['lieu_nais'],
-                'duree_consult' => $res['duree_consult']
-             );
-            return $consult;
-        } elseif (!$res) {
-            $res = "vide";
             return $res;
-        } else {
-            $res = $linkpdo->errorInfo();
+        } else{
+            $res = "vide";
             return $res;
         }
     
@@ -59,12 +50,13 @@ function getConsultById($id)
         $stmt->bindParam(':id', $id);
         $stmt->execute();
         $res = ($stmt->fetchAll(PDO::FETCH_ASSOC));
+        $linkpdo = null;
         if (!$res) {
             $res = "vide";
+            return $res;
         } else {
-            $res = $linkpdo->errorInfo();
+            return $res;
         }
-        $linkpdo = null;
         return $res;
     }
 

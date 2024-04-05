@@ -9,19 +9,19 @@ require_once 'APIConsultations.php';
 
 			if (!isset($_GET['id'])) {
 				$res = getAllConsult();
-				if ($res != null) {
-					deliver_response("200", "OK", $res);
-				} elseif ($res === "vide") {
+				if ($res === "vide") {
 					deliver_response("400", "Aucune consultation enregistrée");
+				} elseif ($res != null) {
+					deliver_response("200", "OK", $res);
 				} else {
 					deliver_response("400", "Erreur SQL :", $res);
 				}
 			}else{
 				$res = getConsultById($_GET['id']);
-				if ($res != null) {
-					deliver_response("200", "OK", $res);
-				} elseif ($res === "vide") {
+				if ($res === "vide") {
 					deliver_response("400", "Cette consultation n'existe pas");
+				} elseif ($res != null) {
+					deliver_response("200", "OK", $res);
 				} else {
 					deliver_response("400", "Erreur SQL :", $res);
 				}
