@@ -1,6 +1,6 @@
 <?php 
 
-include 'APIPatient.php';
+require_once 'APIPatient.php';
 
 $http_method = $_SERVER['REQUEST_METHOD'];
 
@@ -30,16 +30,16 @@ $http_method = $_SERVER['REQUEST_METHOD'];
 	        if (!isset($data["civilite"]) || !isset($data['nom']) || !isset($data['prenom']) || !isset($data['sexe']) || !isset($data['adresse']) || !isset($data['ville']) || !isset($data['code_postal']) || !isset($data['date_nais']) || !isset($data['lieu_nais']) || !isset($data['num_secu'])) {
 	            deliver_response(400, "Données manquantes");
 		    } else {
-				$civilite = 	$data['civilite'];
-				$nom = 			$data["nom"];
-				$prenom = 		$data["prenom"];
-				$sexe = 		$data["sexe"];
-				$adresse = 		$data["adresse"];
-				$ville = 		$data["ville"];
-				$code_postal = 	$data["code_postal"];
-				$dateN = 		DateTime::createFromFormat('d/m/Y', $data["date_nais"]);
-				$lieuN = 		$data["lieu_nais"];
-				$numSecu = 		$data["num_secu"];
+				$civilite = $data['civilite'];
+				$nom = $data["nom"];
+				$prenom = $data["prenom"];
+				$sexe = $data["sexe"];
+				$adresse = $data["adresse"];
+				$ville = $data["ville"];
+				$code_postal = $data["code_postal"];
+				$dateN = DateTime::createFromFormat('d/m/Y', $data["date_nais"]);
+				$lieuN = $data["lieu_nais"];
+				$numSecu = $data["num_secu"];
 				$date_verif = $dateN->format('Y-m-d');
 
 		    	$res = ajoutUsager($civilite, $nom, $prenom, $sexe, $adresse, $code_postal, $ville, $dateN, $lieuN, $numSecu, $date_verif);
@@ -72,13 +72,15 @@ $http_method = $_SERVER['REQUEST_METHOD'];
 
 		case "PATCH":
 
-				patchUnPatient();
-		
-			break;
+				$dataPatch = (array) json_decode(file_get_contents('php://input'), TRUE);
+				$id_usager = $_GET['id'];
+				$res = modifUsager($id_usager, $dataPatch);
 
-		case "PUT":
-		
-				putUnPatient();
+				if ($res != null) {
+		    		deliver_response("200", "OK", $res);
+		    	} else {
+		    		deliver_response("400", "Erreur lors de la modification de l'usager");
+		    	}
 		
 			break;
  	}
