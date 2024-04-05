@@ -1,6 +1,6 @@
 <?php  
 
-require 'ConnexionBdGen.php';
+//require_once 'ConnexionBdGen.php';
 
 function deliver_response($status_code, $status_message, $data=null){
     /// Paramétrage de l'entête HTTP
@@ -21,11 +21,19 @@ function deliver_response($status_code, $status_message, $data=null){
 
 function getAllConsult()
     {
-    //include "BD/connexionBdGen.php";
-    $linkpdo = connexionBdGen::getInstance();
+    //$linkpdo = connexionBdGen::getInstance();
+        $base_url = "mysql:host=%s;dbname=%s";
+        $url = sprintf($base_url, "localhost", "api_cabinet");
+        $linkpdo = new PDO($url, "root", "omgloltrol");
+        
         $stmt = $linkpdo->prepare("SELECT * FROM `consultation`;");
         $stmt->execute();
         $res = ($stmt->fetchAll(PDO::FETCH_ASSOC));
+        if (!$res) {
+            $res = "vide";
+        } else {
+            $res = $linkpdo->errorInfo();
+        }
         $linkpdo = null;
         return $res;
     
@@ -33,73 +41,120 @@ function getAllConsult()
 
 function getConsultById($id)
     {
-        $linkpdo = connexionBdGen::getInstance();
-    
+        //$linkpdo = connexionBdGen::getInstance();
+        $base_url = "mysql:host=%s;dbname=%s";
+        $url = sprintf($base_url, "localhost", "api_cabinet");
+        $linkpdo = new PDO($url, "root", "omgloltrol");
+
         $stmt = $linkpdo->prepare("SELECT * FROM `consultation` where id_consult = :id;");
         $stmt->bindParam(':id', $id);
         $stmt->execute();
         $res = ($stmt->fetchAll(PDO::FETCH_ASSOC));
+        if (!$res) {
+            $res = "vide";
+        } else {
+            $res = $linkpdo->errorInfo();
+        }
         $linkpdo = null;
         return $res;
     }
 
 function ajoutConsultation($id_medecin, $id_patient, $dateRDV, $heureRDV, $dureeCons){
-    $linkpdo = connexionBdGen::getInstance();
-    //Recupérer les données
-   //Vérication de doublon
-   $sql = "SELECT * FROM consultation WHERE id_medecin = '$id_medecin' AND date_consult = '$dateRDV' AND heure_consult = '$heureRDV' AND id_usager = '$id_patient' AND duree_consult = '$dureeCons'; ";
-   $result = $linkpdo->prepare($sql);
-   if ($result->rowCount() > 0 ){
-    echo "Ce rdv existe deja dans la BD.";
-   }else{
-    $insertSql = "INSERT INTO consultation(id_medecin, date_consult, heure_consult, id_usager, duree_consult) VALUES('$id_medecin', '$dateRDV', '$heureRDV', '$id_patient', '$dureeCons')";
-       if ($linkpdo->exec($insertSql) !== false){
-           echo "Consultation enregistrée";
-       }else{
-            echo "Erreur lors de l'insertion du medecin : " . print_r($linkpdo->errorInfo());
+    //$linkpdo = connexionBdGen::getInstance();
+    $base_url = "mysql:host=%s;dbname=%s";
+    $url = sprintf($base_url, "localhost", "api_cabinet");
+    $linkpdo = new PDO($url, "root", "omgloltrol");
+    $sql = "SELECT * FROM consultation WHERE id_medecin = '$id_medecin' AND date_consult = '$dateRDV' AND    heure_consult = '$heureRDV' AND id_usager = '$id_patient' AND duree_consult = '$dureeCons'; ";
+    $result = $linkpdo->prepare($sql);
+    if ($result->rowCount() > 0 ){
+        $status = "existant";
+        return $status;
+    }else{
+     $insertSql = "INSERT INTO consultation(id_medecin, date_consult, heure_consult, id_usager, duree_consult)   VALUES('$id_medecin', '$dateRDV', '$heureRDV', '$id_patient', '$dureeCons')";
+        if ($linkpdo->exec($insertSql) !== false){
+            $status = "good";
+            return $status;
+        }else{
+            $status = $linkpdo->errorInfo();
+            return $status;
        }
    } 
     
 }
 
 function supprimerConsultation($id_consult) {
-    $linkpdo = connexionBdGen::getInstance();
+    //$linkpdo = connexionBdGen::getInstance();
+    $base_url = "mysql:host=%s;dbname=%s";
+    $url = sprintf($base_url, "localhost", "api_cabinet");
+    $linkpdo = new PDO($url, "root", "omgloltrol");
 
-    $sql = "DELETE FROM consultation WHERE id_consult = :id_consult";
-    $stmt = $linkpdo->prepare($sql);
-    $stmt->bindParam(':id_consult', $id_consult, PDO::PARAM_INT);
+    $sql = getConsultById($id_consult);
 
-    if ($stmt->execute()) {
-        echo "Actualisez la page pour finir la suppression";
+    if ($sql === "vide") {
+        $status = "vide";
+        return $status;
     } else {
-        echo "Erreur lors de la suppression de la consultation : " . print_r($stmt->errorInfo(), true);
+
+        $sql = "DELETE FROM consultation WHERE id_consult = :id_consult";
+        $stmt = $linkpdo->prepare($sql);
+        $stmt->bindParam(':id_consult', $id_consult, PDO::PARAM_INT);
+    
+        if ($stmt->execute()) {
+            $status = "good";
+            return $status;
+        } else {
+            $status = $linkpdo->errorInfo();
+            return $status;
+        }
     }
 }
 
-function modifConsultation(){
+function patchConsultation($id_consult, $dataPatch){
 
-    $linkpdo = connexionBdGen::getInstance();
-    //Recupérer les données
-    $id_medecin = isset($_POST["id_medecin"]) ? $_POST["id_medecin"] : '';
-    $date = isset($_POST["date"]) ? $_POST["date"] : '';
-    $heure = isset($_POST["heure"]) ? $_POST["heure"] : '';
-    $id_patient = isset($_POST["id_patient"]) ? $_POST["id_patient"] : '';
+        $base_url = "mysql:host=%s;dbname=%s";
+        $url = sprintf($base_url, "localhost", "api_cabinet");
+        $linkpdo = new PDO($url, "root", "omgloltrol");
 
-    //Vérication de doublon
-    $sql = "SELECT * FROM consultation WHERE medecin = '$medecin' AND dateRDV = '$dateRDV' AND heureRDV = '$heureRDV' AND patient = '$patient' ;";
-    $result = $linkpdo->query($sql);
-   
-    if ($result->rowCount() > 0 ){
-        echo "Cette consultation existe deja dans la BD.";
-    }else{
-        $updateSql = "UPDATE medecin SET civilite = '$civilite', nom = '$nom', prenom = '$prenom'";
-   
-        if ($linkpdo->exec($updateSql) !== false){
-            echo "Consultation enregistrée";
-        }else{
-            echo "Erreur lors de l'insertion de la consultation : " . print_r($linkpdo->errorInfo());
+        $ancienConsult = getConsultById($_GET['id']);
+
+        if ($ancienConsult === "vide") {
+            $status = "vide";
+            return $status;
         }
-    } 
+
+            if (isset($dataPatch['id_usager'])) {
+                $ancienConsult['id_usager'] = $dataPatch['id_usager'];
+            }
+            if (isset($dataPatch['id_medecin'])) {
+                $ancienConsult['id_medecin'] = $dataPatch['id_medecin'];
+            }
+            if (isset($dataPatch['date_consult'])) {
+                $ancienConsult['date_consult'] = $dataPatch['date_consult'];
+            }
+            if (isset($dataPatch['heure_consult'])) {
+                $ancienConsult['heure_consult'] = $dataPatch['heure_consult'];
+            }
+            if (isset($dataPatch['duree_consult'])) {
+                $ancienConsult['duree_consult'] = $dataPatch['duree_consult'];
+            }
+
+        $updateSql = "UPDATE `consultation` SET id_usager = :id_usager, id_medecin = :id_medecin, date_consult =:date_consult, heure_consult = :heure_consult, duree_consult = :duree_consult  WHERE id_consult = :id";
+
+        $stmt = $linkpdo->prepare($updateSql);
+        $stmt->bindParam(":id_usager", $ancienConsult['id_usager'], PDO::PARAM_INT);
+        $stmt->bindParam(":id_medecin", $ancienConsult['id_medecin'], PDO::PARAM_INT);
+        $stmt->bindParam(":date_consult", $ancienConsult['date_consult'], PDO::PARAM_INT);
+        $stmt->bindParam(":heure_consult", $ancienConsult['heure_consult'], PDO::PARAM_INT);
+        $stmt->bindParam(":duree_consult", $ancienConsult['duree_consult'], PDO::PARAM_INT);
+        $stmt->bindParam(":id", $_GET['id'], PDO::PARAM_INT);
+
+        if ($stmt->execute()) {
+            $status = "good";
+            return $status;
+        } else {
+            $status = $linkpdo->errorInfo();
+            return $status;
+        }
 
 }
     
