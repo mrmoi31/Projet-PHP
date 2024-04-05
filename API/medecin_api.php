@@ -57,14 +57,14 @@ require_once 'APIMedecin.php';
 				$data = (array) json_decode(file_get_contents('php://input'), TRUE);
 
 				if (!isset($_GET['id'])) {
-					deliver_response(400, "Données manquantes");
+					deliver_response("400", "Données manquantes");
 				} else {
 
 					$id = $_GET['id'];
 
 					$res = supprimerMedecin($id);
 		    		if ($res === "good") {
-		    			deliver_response("200", "OK", $res);
+		    			deliver_response("200", "OK");
 		    		} elseif ($res === "vide") {
 		    			deliver_response("400", "Ce medecin n'existe pas");
 		    		} else {
@@ -81,9 +81,9 @@ require_once 'APIMedecin.php';
 				$res = patchMedecin($id_medecin, $dataPatch);
 
 				if ($res === "good") {
-					deliver_response("200", "OK", getConsultById($_GET['id']));
+					deliver_response("200", "OK", getMedecinById($_GET['id']));
 				} elseif ($res === "vide") {
-					deliver_response("400", "medecin non trouvée");
+					deliver_response("400", "medecin non trouvé");
 				} else {
 					deliver_response("400", "Erreur SQL : ", $res);
 				}
