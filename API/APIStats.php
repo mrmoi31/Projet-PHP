@@ -24,12 +24,20 @@ function deliver_response($status_code, $status_message, $data=null){
         $url = sprintf($base_url, "localhost", "api_cabinet");
         $conn = new PDO($url, "root", "omgloltrol");
         
-        $sql = "SELECT medecin.nom, medecin.prenom, sum(consultation.duree_consult)/60 as nb_heure
-        FROM consultation, medecin WHERE consultation.id_medecin = medecin.id_medecin GROUP BY medecin.id_medecin";
+        $sql = "SELECT nom, prenom, sum(consultation.duree_consult)/60 as nb_heure
+        FROM `consultation`, `medecin` 
+        WHERE consultation.id_medecin = medecin.id_medecin 
+        GROUP BY medecin.id_medecin";
         $stmt = $conn->prepare($sql);
         $stmt->execute();
-        $result = $stmt->fetch(PDO::FETCH_ASSOC);
-    return $result;
+        $res = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $conn = null;
+        if ($res) {
+            return $res;
+        } else{
+            $res = "vide";
+            return $res;
+        }
 }
 
 // Fonction pour récupérer les statistiques des usagers
@@ -48,8 +56,14 @@ function deliver_response($status_code, $status_message, $data=null){
         GROUP BY civilite, age_group";
         $stmt = $conn->prepare($sql);
         $stmt->execute();
-        $result = $stmt->fetch(PDO::FETCH_ASSOC);
-    return $result;
+        $res = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $linkpdo = null;
+        if ($res) {
+            return $res;
+        } else{
+            $res = "vide";
+            return $res;
+        }
 }
 
 ?>
