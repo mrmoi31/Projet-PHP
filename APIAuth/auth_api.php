@@ -23,8 +23,9 @@ include 'APIAuth.php';
 		    
 
 		    $res = demandeJeton($username, $password);
-		    if (!$res) {
-		    	deliver_response("200", "OK", $res);
+			// echo $res;
+		    if ($res) {
+		    	deliver_response("201", "OK", $res);
 		    } else {
 		    	deliver_response("400", "probleme de requete");
 		    }}
