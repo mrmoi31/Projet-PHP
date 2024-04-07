@@ -23,7 +23,7 @@ function getAllConsult()
     {
     //$linkpdo = connexionBdGen::getInstance();
         $base_url = "mysql:host=%s;dbname=%s";
-        $url = sprintf($base_url, "localhost", "api_cabinet");
+        $url = sprintf($base_url, "mysql-medecin.alwaysdata.net", "medecin_projet_php");
         $linkpdo = new PDO($url, "root", "");
         
         $stmt = $linkpdo->prepare("SELECT * FROM `consultation`;");
@@ -43,7 +43,7 @@ function getConsultById($id)
     {
         //$linkpdo = connexionBdGen::getInstance();
         $base_url = "mysql:host=%s;dbname=%s";
-        $url = sprintf($base_url, "localhost", "api_cabinet");
+        $url = sprintf($base_url, "mysql-medecin.alwaysdata.net", "medecin_projet_php");
         $linkpdo = new PDO($url, "root", "");
 
         $stmt = $linkpdo->prepare("SELECT * FROM `consultation` where id_consult = :id;");
@@ -62,7 +62,7 @@ function getConsultById($id)
 function ajoutConsultation($id_medecin, $id_patient, $dateRDV, $heureRDV, $dureeCons){
     //$linkpdo = connexionBdGen::getInstance();
     $base_url = "mysql:host=%s;dbname=%s";
-    $url = sprintf($base_url, "localhost", "api_cabinet");
+    $url = sprintf($base_url, "mysql-medecin.alwaysdata.net", "medecin_projet_php");
     $linkpdo = new PDO($url, "root", "");
     $sql = "SELECT * FROM consultation WHERE id_medecin = '$id_medecin' AND date_consult = '$dateRDV' AND    heure_consult = '$heureRDV' AND id_usager = '$id_patient' AND duree_consult = '$dureeCons'; ";
     $result = $linkpdo->prepare($sql);
@@ -85,7 +85,7 @@ function ajoutConsultation($id_medecin, $id_patient, $dateRDV, $heureRDV, $duree
 function supprimerConsultation($id_consult) {
     //$linkpdo = connexionBdGen::getInstance();
     $base_url = "mysql:host=%s;dbname=%s";
-    $url = sprintf($base_url, "localhost", "api_cabinet");
+    $url = sprintf($base_url, "mysql-medecin.alwaysdata.net", "medecin_projet_php");
     $linkpdo = new PDO($url, "root", "");
 
     $sql = getConsultById($id_consult);
@@ -112,7 +112,7 @@ function supprimerConsultation($id_consult) {
 function patchConsultation($id_consult, $dataPatch){
 
         $base_url = "mysql:host=%s;dbname=%s";
-        $url = sprintf($base_url, "localhost", "api_cabinet");
+        $url = sprintf($base_url, "mysql-medecin.alwaysdata.net", "medecin_projet_php");
         $linkpdo = new PDO($url, "root", "");
 
         $ancienConsult = getConsultById($_GET['id']);

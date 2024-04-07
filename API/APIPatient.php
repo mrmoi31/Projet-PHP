@@ -23,7 +23,7 @@ function deliver_response($status_code, $status_message, $data=null) {
 function getAllUsager() {
     //$linkpdo = connexionBdGen::getInstance();
     $base_url = "mysql:host=%s;dbname=%s";
-    $url = sprintf($base_url, "localhost", "api_cabinet");
+    $url = sprintf($base_url, "mysql-medecin.alwaysdata.net", "medecin_projet_php");
     $linkpdo = new PDO($url, "root", "");
 
     $stmt = $linkpdo->prepare("SELECT * FROM `usager`;");
@@ -41,7 +41,7 @@ function getAllUsager() {
 function getUsagerById($id) {
     //$linkpdo = connexionBdGen::getInstance();
     $base_url = "mysql:host=%s;dbname=%s";
-    $url = sprintf($base_url, "localhost", "api_cabinet");
+    $url = sprintf($base_url, "mysql-medecin.alwaysdata.net", "medecin_projet_php");
     $linkpdo = new PDO($url, "root", "");
 
     $stmt = $linkpdo->prepare("SELECT * FROM `usager` where id_usager = :id;");
@@ -74,7 +74,7 @@ function ajoutUsager($civilite, $nom, $prenom, $sexe, $adresse, $codePostal, $vi
     //$linkpdo = connexionBdGen::getInstance();
 
     $base_url = "mysql:host=%s;dbname=%s";
-    $url = sprintf($base_url, "localhost", "api_cabinet");
+    $url = sprintf($base_url, "mysql-medecin.alwaysdata.net", "medecin_projet_php");
     $linkpdo = new PDO($url, "root", "");
 
     $sql = "SELECT * FROM usager WHERE civilite = '$civilite' AND nom = '$nom' AND prenom = '$prenom' and sexe = '$sexe' AND adresse = '$adresse' AND code_postal = '$codePostal' AND ville = '$ville' AND date_nais = '$date_verif' AND lieu_nais = '$lieuN' AND num_secu = '$numSecu'";
@@ -99,7 +99,7 @@ function ajoutUsager($civilite, $nom, $prenom, $sexe, $adresse, $codePostal, $vi
 function supprimerUsager($id) {
     //$linkpdo = connexionBdGen::getInstance();
     $base_url = "mysql:host=%s;dbname=%s";
-    $url = sprintf($base_url, "localhost", "api_cabinet");
+    $url = sprintf($base_url, "mysql-medecin.alwaysdata.net", "medecin_projet_php");
     $linkpdo = new PDO($url, "root", "");
 
     $sql = getUsagerById($id);
@@ -125,7 +125,7 @@ function supprimerUsager($id) {
         //$linkpdo = connexionBdGen::getInstance();
 
         $base_url = "mysql:host=%s;dbname=%s";
-        $url = sprintf($base_url, "localhost", "api_cabinet");
+        $url = sprintf($base_url, "mysql-medecin.alwaysdata.net", "medecin_projet_php");
         $linkpdo = new PDO($url, "root", "");
 
         $ancienUsager = getUsagerById($_GET['id']);

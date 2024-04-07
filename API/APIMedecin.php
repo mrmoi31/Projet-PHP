@@ -26,7 +26,7 @@ function getAllMedecins()
         //$linkpdo = connexionBdGen::getInstance();
         
         $base_url = "mysql:host=%s;dbname=%s";
-        $url = sprintf($base_url, "localhost", "api_cabinet");
+        $url = sprintf($base_url, "mysql-medecin.alwaysdata.net", "medecin_projet_php");
         $linkpdo = new PDO($url, "root", "");
 
         $stmt = $linkpdo->prepare("SELECT * FROM `medecin`;");
@@ -45,7 +45,7 @@ function getMedecinById($id)
     //$linkpdo = connexionBdGen::getInstance();
 
     $base_url = "mysql:host=%s;dbname=%s";
-    $url = sprintf($base_url, "localhost", "api_cabinet");
+    $url = sprintf($base_url, "mysql-medecin.alwaysdata.net", "medecin_projet_php");
     $linkpdo = new PDO($url, "root", "");
 
     $stmt = $linkpdo->prepare("SELECT * FROM `medecin` where id_medecin = :id;");
@@ -75,7 +75,7 @@ function ajoutMedecin($civilite, $nom, $prenom){
     //$linkpdo = connexionBdGen::getInstance();
     
         $base_url = "mysql:host=%s;dbname=%s";
-        $url = sprintf($base_url, "localhost", "api_cabinet");
+        $url = sprintf($base_url, "mysql-medecin.alwaysdata.net", "medecin_projet_php");
         $linkpdo = new PDO($url, "root", "");
 
         $stmt = $linkpdo->prepare("SELECT * FROM `medecin` WHERE civilite = :civilite AND nom = :nom AND prenom =   :prenom");
@@ -112,7 +112,7 @@ function supprimerMedecin($id) {
     //$linkpdo = connexionBdGen::getInstance();
 
     $base_url = "mysql:host=%s;dbname=%s";
-    $url = sprintf($base_url, "localhost", "api_cabinet");
+    $url = sprintf($base_url, "mysql-medecin.alwaysdata.net", "medecin_projet_php");
     $linkpdo = new PDO($url, "root", "");
 
     $sql = getMedecinById($id);
@@ -143,7 +143,7 @@ function supprimerMedecin($id) {
         //$linkpdo = connexionBdGen::getInstance();
 
         $base_url = "mysql:host=%s;dbname=%s";
-        $url = sprintf($base_url, "localhost", "api_cabinet");
+        $url = sprintf($base_url, "mysql-medecin.alwaysdata.net", "medecin_projet_php");
         $linkpdo = new PDO($url, "root", "");
 
         $ancienMedecin = getMedecinById($_GET['id']);

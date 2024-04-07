@@ -21,7 +21,7 @@ function deliver_response($status_code, $status_message, $data=null){
     function getStatMedecin(){
         //$conn = connexionBD::getInstance();
         $base_url = "mysql:host=%s;dbname=%s";
-        $url = sprintf($base_url, "localhost", "api_cabinet");
+        $url = sprintf($base_url, "mysql-medecin.alwaysdata.net", "medecin_projet_php");
         $conn = new PDO($url, "root", "");
         
         $sql = "SELECT nom, prenom, sum(consultation.duree_consult)/60 as nb_heure
@@ -44,7 +44,7 @@ function deliver_response($status_code, $status_message, $data=null){
     function getStatUsager(){
         //$conn = connexionBD::getInstance();
         $base_url = "mysql:host=%s;dbname=%s";
-        $url = sprintf($base_url, "localhost", "api_cabinet");
+        $url = sprintf($base_url, "mysql-medecin.alwaysdata.net", "medecin_projet_php");
         $conn = new PDO($url, "root", "");
 
         $sql = "SELECT civilite, CASE 

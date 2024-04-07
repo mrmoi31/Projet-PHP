@@ -7,8 +7,8 @@ class connexionBdGen{
     private function __construct(){
         try{
             $base_url = "mysql:host=%s;dbname=%s";
-            $url = sprintf($base_url, "localhost", "api_cabinet");
-            $this->_pdo = new PDO($url, "root", "omgloltrol");
+            $url = sprintf($base_url, "mysql-medecin.alwaysdata.net", "medecin_projet_php");
+            $this->_pdo = new PDO($url, "root", "");
         }catch (PDOException $e){
             die('Erreur: ' . $e->getMessage());
 
