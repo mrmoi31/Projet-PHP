@@ -22,7 +22,7 @@ function deliver_response($status_code, $status_message, $data=null){
         //$conn = connexionBD::getInstance();
         $base_url = "mysql:host=%s;dbname=%s";
         $url = sprintf($base_url, "localhost", "api_cabinet");
-        $conn = new PDO($url, "root", "omgloltrol");
+        $conn = new PDO($url, "root", "");
         
         $sql = "SELECT nom, prenom, sum(consultation.duree_consult)/60 as nb_heure
         FROM `consultation`, `medecin` 
@@ -45,7 +45,7 @@ function deliver_response($status_code, $status_message, $data=null){
         //$conn = connexionBD::getInstance();
         $base_url = "mysql:host=%s;dbname=%s";
         $url = sprintf($base_url, "localhost", "api_cabinet");
-        $conn = new PDO($url, "root", "omgloltrol");
+        $conn = new PDO($url, "root", "");
 
         $sql = "SELECT civilite, CASE 
         WHEN TIMESTAMPDIFF(YEAR, date_nais, CURDATE()) < 25 THEN 'Moins de 25 ans'

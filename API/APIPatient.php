@@ -24,7 +24,7 @@ function getAllUsager() {
     //$linkpdo = connexionBdGen::getInstance();
     $base_url = "mysql:host=%s;dbname=%s";
     $url = sprintf($base_url, "localhost", "api_cabinet");
-    $linkpdo = new PDO($url, "root", "omgloltrol");
+    $linkpdo = new PDO($url, "root", "");
 
     $stmt = $linkpdo->prepare("SELECT * FROM `usager`;");
     $stmt->execute();
@@ -42,7 +42,7 @@ function getUsagerById($id) {
     //$linkpdo = connexionBdGen::getInstance();
     $base_url = "mysql:host=%s;dbname=%s";
     $url = sprintf($base_url, "localhost", "api_cabinet");
-    $linkpdo = new PDO($url, "root", "omgloltrol");
+    $linkpdo = new PDO($url, "root", "");
 
     $stmt = $linkpdo->prepare("SELECT * FROM `usager` where id_usager = :id;");
     $stmt->bindParam(':id', $id);
@@ -75,7 +75,7 @@ function ajoutUsager($civilite, $nom, $prenom, $sexe, $adresse, $codePostal, $vi
 
     $base_url = "mysql:host=%s;dbname=%s";
     $url = sprintf($base_url, "localhost", "api_cabinet");
-    $linkpdo = new PDO($url, "root", "omgloltrol");
+    $linkpdo = new PDO($url, "root", "");
 
     $sql = "SELECT * FROM usager WHERE civilite = '$civilite' AND nom = '$nom' AND prenom = '$prenom' and sexe = '$sexe' AND adresse = '$adresse' AND code_postal = '$codePostal' AND ville = '$ville' AND date_nais = '$date_verif' AND lieu_nais = '$lieuN' AND num_secu = '$numSecu'";
     $res = $linkpdo->query($sql);
@@ -100,7 +100,7 @@ function supprimerUsager($id) {
     //$linkpdo = connexionBdGen::getInstance();
     $base_url = "mysql:host=%s;dbname=%s";
     $url = sprintf($base_url, "localhost", "api_cabinet");
-    $linkpdo = new PDO($url, "root", "omgloltrol");
+    $linkpdo = new PDO($url, "root", "");
 
     $sql = getUsagerById($id);
 
@@ -126,7 +126,7 @@ function supprimerUsager($id) {
 
         $base_url = "mysql:host=%s;dbname=%s";
         $url = sprintf($base_url, "localhost", "api_cabinet");
-        $linkpdo = new PDO($url, "root", "omgloltrol");
+        $linkpdo = new PDO($url, "root", "");
 
         $ancienUsager = getUsagerById($_GET['id']);
 
