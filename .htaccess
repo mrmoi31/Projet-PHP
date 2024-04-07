@@ -6,9 +6,6 @@
 	RewriteCond %{REQUEST_FILENAME} !-f
 	RewriteCond %{REQUEST_FILENAME} !-d
 
-	#Auth
-	RewriteRule ^auth$ APIAuth/auth_api.php
-
 	# medecins
 	RewriteRule ^medecins/?$ API/medecin_api.php [L]
 	RewriteRule ^medecins/([0-9]+)$ API/medecin_api.php?id=$1 [L]
