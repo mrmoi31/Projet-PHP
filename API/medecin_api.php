@@ -9,10 +9,10 @@ require_once 'APIMedecin.php';
 
 			if (!isset($_GET['id'])) {
 				$res = getAllMedecins();
-				if ($res != null) {
-					deliver_response("200", "OK", $res);
-				} elseif ($res === "vide") {
+				if ($res === "vide") {
 					deliver_response("400", "Aucun enregistré");
+				}elseif ($res != null) {
+					deliver_response("200", "OK", $res);
 				} else {
 					deliver_response("400", "Erreur SQL : ", $res);
 				}
