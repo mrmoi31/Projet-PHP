@@ -24,7 +24,7 @@ function getAllConsult()
     //$linkpdo = connexionBdGen::getInstance();
         $base_url = "mysql:host=%s;dbname=%s";
         $url = sprintf($base_url, "mysql-medecin.alwaysdata.net", "medecin_projet_php");
-        $linkpdo = new PDO($url, "root", "");
+        $linkpdo = new PDO($url, "medecin", "\$iutinfo");
         
         $stmt = $linkpdo->prepare("SELECT * FROM `consultation`;");
         $stmt->execute();
@@ -44,7 +44,7 @@ function getConsultById($id)
         //$linkpdo = connexionBdGen::getInstance();
         $base_url = "mysql:host=%s;dbname=%s";
         $url = sprintf($base_url, "mysql-medecin.alwaysdata.net", "medecin_projet_php");
-        $linkpdo = new PDO($url, "root", "");
+        $linkpdo = new PDO($url, "medecin", "\$iutinfo");
 
         $stmt = $linkpdo->prepare("SELECT * FROM `consultation` where id_consult = :id;");
         $stmt->bindParam(':id', $id);
@@ -63,7 +63,7 @@ function ajoutConsultation($id_medecin, $id_patient, $dateRDV, $heureRDV, $duree
     //$linkpdo = connexionBdGen::getInstance();
     $base_url = "mysql:host=%s;dbname=%s";
     $url = sprintf($base_url, "mysql-medecin.alwaysdata.net", "medecin_projet_php");
-    $linkpdo = new PDO($url, "root", "");
+    $linkpdo = new PDO($url, "medecin", "\$iutinfo");
     $sql = "SELECT * FROM consultation WHERE id_medecin = '$id_medecin' AND date_consult = '$dateRDV' AND    heure_consult = '$heureRDV' AND id_usager = '$id_patient' AND duree_consult = '$dureeCons'; ";
     $result = $linkpdo->prepare($sql);
     if ($result->rowCount() > 0 ){
@@ -86,7 +86,7 @@ function supprimerConsultation($id_consult) {
     //$linkpdo = connexionBdGen::getInstance();
     $base_url = "mysql:host=%s;dbname=%s";
     $url = sprintf($base_url, "mysql-medecin.alwaysdata.net", "medecin_projet_php");
-    $linkpdo = new PDO($url, "root", "");
+    $linkpdo = new PDO($url, "medecin", "\$iutinfo");
 
     $sql = getConsultById($id_consult);
 
@@ -113,7 +113,7 @@ function patchConsultation($id_consult, $dataPatch){
 
         $base_url = "mysql:host=%s;dbname=%s";
         $url = sprintf($base_url, "mysql-medecin.alwaysdata.net", "medecin_projet_php");
-        $linkpdo = new PDO($url, "root", "");
+        $linkpdo = new PDO($url, "medecin", "\$iutinfo");
 
         $ancienConsult = getConsultById($_GET['id']);
 

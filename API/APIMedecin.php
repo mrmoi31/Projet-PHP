@@ -27,7 +27,7 @@ function getAllMedecins()
         
         $base_url = "mysql:host=%s;dbname=%s";
         $url = sprintf($base_url, "mysql-medecin.alwaysdata.net", "medecin_projet_php");
-        $linkpdo = new PDO($url, "root", "");
+        $linkpdo = new PDO($url, "medecin", "\$iutinfo");
 
         $stmt = $linkpdo->prepare("SELECT * FROM `medecin`;");
         $stmt->execute();
@@ -46,7 +46,7 @@ function getMedecinById($id)
 
     $base_url = "mysql:host=%s;dbname=%s";
     $url = sprintf($base_url, "mysql-medecin.alwaysdata.net", "medecin_projet_php");
-    $linkpdo = new PDO($url, "root", "");
+    $linkpdo = new PDO($url, "medecin", "\$iutinfo");
 
     $stmt = $linkpdo->prepare("SELECT * FROM `medecin` where id_medecin = :id;");
     $stmt->bindParam(':id', $id);
@@ -76,7 +76,7 @@ function ajoutMedecin($civilite, $nom, $prenom){
     
         $base_url = "mysql:host=%s;dbname=%s";
         $url = sprintf($base_url, "mysql-medecin.alwaysdata.net", "medecin_projet_php");
-        $linkpdo = new PDO($url, "root", "");
+        $linkpdo = new PDO($url, "medecin", "\$iutinfo");
 
         $stmt = $linkpdo->prepare("SELECT * FROM `medecin` WHERE civilite = :civilite AND nom = :nom AND prenom =   :prenom");
         $stmt->bindParam(':civilite', $civilite);
@@ -113,7 +113,7 @@ function supprimerMedecin($id) {
 
     $base_url = "mysql:host=%s;dbname=%s";
     $url = sprintf($base_url, "mysql-medecin.alwaysdata.net", "medecin_projet_php");
-    $linkpdo = new PDO($url, "root", "");
+    $linkpdo = new PDO($url, "medecin", "\$iutinfo");
 
     $sql = getMedecinById($id);
     if ($sql === "vide") {
@@ -144,7 +144,7 @@ function supprimerMedecin($id) {
 
         $base_url = "mysql:host=%s;dbname=%s";
         $url = sprintf($base_url, "mysql-medecin.alwaysdata.net", "medecin_projet_php");
-        $linkpdo = new PDO($url, "root", "");
+        $linkpdo = new PDO($url, "medecin", "\$iutinfo");
 
         $ancienMedecin = getMedecinById($_GET['id']);
 
